@@ -20,6 +20,7 @@ rm -rf "$BUILD" && mkdir -p "$BUILD/stage" "$BUILD/spk" "$DIST"
 
 # 1. Stage the DSM app with versioned paths (DSM caches 3rd-party files aggressively).
 cp -a src/app "$BUILD/stage/app"
+cp LICENSE "$BUILD/stage/app/ui/licenses/GPL-3.0.txt"   # source licence, shown in the app
 APP="$BUILD/stage/app"
 mv "$APP/ui" "$APP/ui-tmp" && mkdir "$APP/ui" && mv "$APP/ui-tmp" "$APP/ui/v$VERSION"
 mv "$APP/wrapper.js" "$APP/wrapper-$VERSION.js"

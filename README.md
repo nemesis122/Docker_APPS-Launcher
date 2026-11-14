@@ -94,6 +94,6 @@ Full history: [CHANGELOG.md](CHANGELOG.md) · Test scope and limits: [VALIDATION
 
 Copyright © 2026 nemesis122.
 
-The application source code is licensed under the [GNU General Public License v3.0](LICENSE) (GPL-3.0-only). You may use, change and redistribute it under those terms; redistributed versions must stay under the GPL and include their source.
+The application source code is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License](LICENSE) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version (GPL-3.0-or-later). Redistributed versions must stay under the GPL and include their source. The licence text is also included in the package and linked in the app under Settings → About & licenses.
 
 The bundled icons are **not** covered by the GPL. They come from [selfh.st/icons](https://github.com/selfhst/icons) (CC BY 4.0) plus individually attributed logos; names, logos and trademarks belong to their respective owners. Detailed credits: [`src/app/ui/licenses/`](src/app/ui/licenses/).

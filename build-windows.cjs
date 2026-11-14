@@ -8,6 +8,7 @@ if(path.resolve(build)!==path.join(path.resolve(root),'build')||path.dirname(bui
 fs.rmSync(build,{recursive:true,force:true});
 fs.mkdirSync(stage,{recursive:true});fs.mkdirSync(spk,{recursive:true});fs.mkdirSync(dist,{recursive:true});
 fs.cpSync(path.join(root,'src/app'),stage,{recursive:true});
+fs.copyFileSync(path.join(root,'LICENSE'),path.join(stage,'ui','licenses','GPL-3.0.txt')); // source licence, shown in the app
 fs.renameSync(path.join(stage,'ui'),path.join(stage,'ui-temp'));
 fs.mkdirSync(path.join(stage,'ui'),{recursive:true});fs.renameSync(path.join(stage,'ui-temp'),path.join(stage,'ui','v'+version));
 for(const name of ['wrapper','bootstrap'])fs.renameSync(path.join(stage,name+'.js'),path.join(stage,name+'-'+version+'.js'));

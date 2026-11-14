@@ -9,3 +9,5 @@ html[data-docker-apps-ui] #details-metrics .io-rates span:nth-child(odd) { color
 html[data-docker-apps-ui] .app-card[draggable="true"] { cursor:grab }
 html[data-docker-apps-ui] .app-card.is-dragging { opacity:.45 }
 html[data-docker-apps-ui] .app-card.is-drop-target { outline:2px solid var(--accent,#0b74de);outline-offset:2px }
+html[data-docker-apps-ui] .code-license { color:var(--muted);text-decoration:none;align-self:flex-start }
+html[data-docker-apps-ui] .code-license:hover { text-decoration:underline }

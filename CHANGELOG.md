@@ -1,8 +1,9 @@
 # Changelog
 
-## Unreleased
+## 1.6.1
 
-- The source code is now licensed under GPL-3.0 (`LICENSE`). Bundled icons keep their own licenses.
+- **Licence:** the source code is licensed under GPL-3.0-or-later (`LICENSE`). The licence text is included in the package and linked in the app under Settings → About & licenses. Bundled icons keep their own licenses.
+- No functional changes to the launcher.
 
 ## 1.6.0
 
