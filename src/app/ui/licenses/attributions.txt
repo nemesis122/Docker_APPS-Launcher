@@ -1,0 +1,13 @@
+Icon collection: selfh.st/icons, https://github.com/selfhst/icons
+License: Creative Commons Attribution 4.0 International (CC BY 4.0).
+Snapshot: 1d65d45a42e6323b54b8096967b1ea4b65321f97, 2026-10-24.
+The included WebP collection images are copied without alterations.
+FileBot icon: https://www.filebot.net/favicon.ico, obtained 2026-10-24;
+converted from ICO to lossless WebP for display, without recoloring.
+Names, logos and trademarks belong to their respective owners and identify
+the configured applications. Inclusion does not imply endorsement.
+The collection license does not override individual brand rights.
+
+Twonky Server icon: https://twonky-wp.s3.amazonaws.com/2021/09/cropped-cropped-Twonky_Logo_Favicon-s3-192x192.png
+Source: https://twonky.com/, obtained 2026-10-24; converted PNG to lossless WebP.
+Twonky brand rights remain with its owners; this additional logo is not relicensed as CC BY.

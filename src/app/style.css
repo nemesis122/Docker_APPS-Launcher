@@ -1,0 +1,2 @@
+/* Intentionally empty: DSM may load this root stylesheet into its desktop.
+   Application styles live in ui/v<version>/launcher.css and require an explicit document marker. */

@@ -1,0 +1,10 @@
+[
+  {
+    "step_title": "Shared NAS storage",
+    "items": [
+      {
+        "desc": "<b>By default the application list is stored in the docker shared folder, inside Docker APPS.</b><br><br>The subfolder is created automatically on first launch through File Station using the existing permissions of your DSM login. If the docker shared folder does not exist, another shared folder can be selected in the app. Existing folders and lists are preserved. The package requests no root privileges and does not expand folder permissions.<br><br>Authorized devices use the same list. Earlier versions of the list can be restored via “History”; the app keeps the last 30 versions."
+      }
+    ]
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "name": "docker-apps-dsm",
+  "private": true,
+  "description": "DSM launcher for container web applications (Synology DSM 7.2+ package)",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "build": "./build.sh",
+    "test:e2e": "./build.sh && node tests/ui.e2e.js",
+    "check": "for f in src/app/ui/*.js src/app/*.js; do node --check \"$f\" || exit 1; done",
+    "test:package": "node --test tests/package.test.cjs",
+    "test:ui-regression": "node tests/ui-regression.cjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.50.0"
+  }
+}

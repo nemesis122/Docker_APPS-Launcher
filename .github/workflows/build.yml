@@ -1,0 +1,53 @@
+name: Build SPK
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - name: Syntax
+        run: npm run check
+      - name: Unit-Tests (simulierte DSM)
+        run: npm test
+      - name: SPK bauen
+        run: node build-windows.cjs
+      - name: Paket prüfen
+        run: node --test tests/package.test.cjs
+      - name: Oberflächentest in Chrome
+        run: node tests/ui.e2e.js
+      - name: Layout-Regressionen
+        run: node tests/ui-regression.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: docker-apps-spk
+          path: |
+            dist/
+            build/screenshots/
+            build/qa/
+      - name: Release anhängen
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "v$(cat VERSION)" = "$GITHUB_REF_NAME" || { echo "Tag passt nicht zu VERSION"; exit 1; }
+          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || gh release create "$GITHUB_REF_NAME" --title "Docker_APPS-Launcher $(cat VERSION)" --notes "See CHANGELOG.md"
+          # Never replace files that were already published with the release: their checksums are documented.
+          for f in dist/*; do
+            if gh release view "$GITHUB_REF_NAME" --json assets --jq '.assets[].name' | grep -qxF "$(basename "$f")"; then echo "kept: $(basename "$f")"; else gh release upload "$GITHUB_REF_NAME" "$f"; fi
+          done

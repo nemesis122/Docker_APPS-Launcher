@@ -1,0 +1,11 @@
+/* 1.6.0 additions. Kept separate so the 1.5.x stylesheets and their typography stay untouched. */
+html[data-docker-apps-ui] #sort-mode { flex:0 0 auto;max-width:190px;background:var(--field);font-size:12px }
+html[data-docker-apps-ui] .inline-option { display:flex;align-items:center;gap:8px;margin-top:4px;color:var(--text,inherit);cursor:pointer }
+html[data-docker-apps-ui] .inline-option input { width:auto;flex:0 0 auto;margin:0 }
+html[data-docker-apps-ui] #new-category { margin-top:6px }
+html[data-docker-apps-ui] .app-card .io-rates { display:none }
+html[data-docker-apps-ui] #details-metrics .io-rates { display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-variant-numeric:tabular-nums }
+html[data-docker-apps-ui] #details-metrics .io-rates span:nth-child(odd) { color:var(--muted) }
+html[data-docker-apps-ui] .app-card[draggable="true"] { cursor:grab }
+html[data-docker-apps-ui] .app-card.is-dragging { opacity:.45 }
+html[data-docker-apps-ui] .app-card.is-drop-target { outline:2px solid var(--accent,#0b74de);outline-offset:2px }

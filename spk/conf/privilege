@@ -1,0 +1,8 @@
+{
+  "defaults": {
+    "run-as": "package"
+  },
+  "username": "docker-apps",
+  "groupname": "docker-apps",
+  "join-groupname": "http"
+}

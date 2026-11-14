@@ -1,0 +1,9 @@
+#!/bin/sh
+STATE="${SYNOPKG_PKGVAR:-/var/packages/docker-apps/var}"
+case "$1" in
+  start) mkdir -p "$STATE" || exit 1; : > "$STATE/started"; exit $? ;;
+  stop) rm -f "$STATE/started"; exit 0 ;;
+  status) [ -f "$STATE/started" ] && exit 0; exit 3 ;;
+  log) exit 0 ;;
+  *) exit 1 ;;
+esac

@@ -1,0 +1,92 @@
+/* DSM launcher redesign. Typography remains supplied by the original 1.5.0 rules. */
+html[data-docker-apps-ui] header { padding:18px 24px;gap:16px;flex-wrap:nowrap; }
+html[data-docker-apps-ui] .identity { min-width:0; }
+html[data-docker-apps-ui] .identity p { display:none; }
+html[data-docker-apps-ui] h1 { margin:0;white-space:nowrap; }
+html[data-docker-apps-ui] .header-actions { width:auto;gap:10px;flex-wrap:nowrap; }
+html[data-docker-apps-ui] .action-menu { position:relative; }
+html[data-docker-apps-ui] .action-menu > summary { list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;min-height:36px;padding:8px 12px;border:1px solid var(--border);border-radius:5px;background:var(--surface);white-space:nowrap; }
+html[data-docker-apps-ui] .action-menu > summary::-webkit-details-marker { display:none; }
+html[data-docker-apps-ui] #manage-list > summary::after { content:'⌄';margin-left:10px; }
+html[data-docker-apps-ui] .action-menu > summary:hover,html[data-docker-apps-ui] .action-menu[open] > summary { background:var(--hover);border-color:var(--blue); }
+html[data-docker-apps-ui] .action-menu > summary:focus-visible { outline:2px solid var(--blue);outline-offset:3px; }
+html[data-docker-apps-ui] .menu-panel { position:absolute;right:0;top:calc(100% + 8px);z-index:30;width:280px;max-width:calc(100vw - 32px);max-height:calc(100dvh - 100px);overflow:auto;padding:8px;background:var(--surface);border:1px solid var(--border);border-radius:7px;box-shadow:0 8px 28px #0002;display:flex;flex-direction:column;gap:4px; }
+html[data-docker-apps-ui] .menu-panel > button { text-align:left;width:100%;border-color:transparent;padding:9px 10px; }
+html[data-docker-apps-ui] .menu-panel .menu-setting { display:flex;justify-content:space-between;gap:10px;align-items:center;padding:5px 10px; }
+html[data-docker-apps-ui] .menu-panel > label { padding:9px 10px; }
+html[data-docker-apps-ui] .menu-info { display:flex;flex-direction:column;gap:8px;padding:12px 10px;border-top:1px solid var(--border);color:var(--muted);overflow-wrap:anywhere; }
+html[data-docker-apps-ui] .menu-panel .icon-credit { align-self:flex-start;padding:8px 10px; }
+html[data-docker-apps-ui] .overview-layout { padding:0 24px 0;gap:16px; }
+html[data-docker-apps-ui][data-summary-collapsed="true"] .overview-layout { padding:0 24px 0;gap:16px; }
+html[data-docker-apps-ui] .system-bar { padding:14px 16px;margin-top:0;align-items:center; }
+html[data-docker-apps-ui] .overview-layout .nas-summary { gap:8px 24px; }
+html[data-docker-apps-ui] .overview-layout .filter-bar { padding:0;gap:10px;flex-wrap:nowrap; }
+html[data-docker-apps-ui] .search { max-width:440px;min-width:120px;flex:1; }
+html[data-docker-apps-ui] .view-switch { display:flex;margin-left:auto;border:1px solid var(--border);border-radius:5px;overflow:hidden;flex:none; }
+html[data-docker-apps-ui] .view-switch button { display:flex;align-items:center;justify-content:center;min-width:38px;min-height:36px;padding:7px 9px;border:0;border-right:1px solid var(--border);border-radius:0; }
+html[data-docker-apps-ui] .view-switch button:last-child { border-right:0; }
+html[data-docker-apps-ui] .view-switch button[aria-pressed="true"] { color:var(--blue);background:var(--hover);box-shadow:inset 0 0 0 1px var(--blue); }
+html[data-docker-apps-ui] .view-switch svg { width:19px;height:19px;fill:currentColor;stroke:currentColor;stroke-width:1.6; }
+html[data-docker-apps-ui] .application-heading { display:flex;align-items:center;gap:18px;padding:16px 24px 14px; }
+html[data-docker-apps-ui] #app-count { margin:0;color:var(--text); }
+html[data-docker-apps-ui] #application-states { color:var(--muted); }
+html[data-docker-apps-ui] main { padding:0 24px 24px; }
+html[data-docker-apps-ui] .app-grid { gap:12px; }
+html[data-docker-apps-ui][data-tile-size="ultra-small"] { --tile-min:140px;--tile-icon:28px;--tile-logo:24px;--tile-pad:10px; }
+html[data-docker-apps-ui][data-tile-size="very-small"] { --tile-min:180px;--tile-icon:36px;--tile-logo:30px;--tile-pad:12px; }
+html[data-docker-apps-ui][data-tile-size="small"] { --tile-min:232px;--tile-icon:48px;--tile-logo:40px;--tile-pad:18px; }
+html[data-docker-apps-ui][data-tile-size="medium"] { --tile-min:260px;--tile-icon:56px;--tile-logo:46px;--tile-pad:20px; }
+html[data-docker-apps-ui][data-tile-size="large"] { --tile-min:300px;--tile-icon:64px;--tile-logo:54px;--tile-pad:22px; }
+html[data-docker-apps-ui][data-view="tiles"] .app-card { box-shadow:none; }
+html[data-docker-apps-ui][data-view="tiles"] .card-main { grid-template-columns:var(--tile-icon) minmax(0,1fr);grid-template-rows:auto;gap:10px;padding:var(--tile-pad);padding-right:30px;min-height:0; }
+html[data-docker-apps-ui][data-view="tiles"] .app-card .app-icon { grid-row:1;margin:0;border:0;border-radius:8px; }
+html[data-docker-apps-ui][data-view="tiles"] .app-card .app-icon.catalog-logo { background:transparent; }
+html[data-docker-apps-ui][data-view="tiles"] .app-name { grid-row:1;white-space:normal;overflow-wrap:anywhere; }
+html[data-docker-apps-ui][data-view="tiles"] .app-description,html[data-docker-apps-ui][data-view="tiles"] .app-address { display:none; }
+html[data-docker-apps-ui][data-view="tiles"] .app-card .container-metrics { padding:0 var(--tile-pad) 12px; }
+html[data-docker-apps-ui][data-view="tiles"] .status-label { margin-bottom:12px; }
+html[data-docker-apps-ui][data-view="tiles"] .card-footer { padding:7px var(--tile-pad);border-top:1px solid var(--border);justify-content:flex-end;min-height:40px; }
+html[data-docker-apps-ui][data-view="tiles"] .edit { position:absolute;top:7px;right:6px;width:24px;min-height:28px;justify-content:center;color:var(--muted);border:1px solid transparent;border-radius:4px; }
+html[data-docker-apps-ui][data-view="tiles"] .edit:hover { border-color:var(--border);background:var(--hover); }
+html[data-docker-apps-ui][data-view="tiles"] .container-metrics > .meter-label,html[data-docker-apps-ui][data-view="tiles"] .container-metrics > .meter-track { display:block; }
+html[data-docker-apps-ui][data-view="tiles"] .container-metrics > .meter-label { display:flex; }
+html[data-docker-apps-ui][data-view="tiles"] .container-metrics > .compact-metrics { display:none; }
+html[data-docker-apps-ui][data-view="tiles"]:is([data-tile-size="very-small"],[data-tile-size="ultra-small"]) .container-metrics > .meter-label,html[data-docker-apps-ui][data-view="tiles"]:is([data-tile-size="very-small"],[data-tile-size="ultra-small"]) .container-metrics > .meter-track { display:none; }
+html[data-docker-apps-ui][data-view="tiles"]:is([data-tile-size="very-small"],[data-tile-size="ultra-small"]) .container-metrics > .compact-metrics { display:grid; }
+html[data-docker-apps-ui][data-view="tiles"]:is([data-tile-size="small"],[data-tile-size="medium"],[data-tile-size="large"]) .container-metrics { display:grid;grid-template-columns:minmax(0,1fr) 60px;gap:7px 12px;align-items:center; }
+html[data-docker-apps-ui][data-view="tiles"]:is([data-tile-size="small"],[data-tile-size="medium"],[data-tile-size="large"]) .container-metrics > .status-label { grid-column:1/-1;margin-bottom:5px; }
+html[data-docker-apps-ui][data-view="tiles"]:is([data-tile-size="small"],[data-tile-size="medium"],[data-tile-size="large"]) .container-metrics > .meter-label { display:flex;grid-column:1;min-width:0; }
+html[data-docker-apps-ui][data-view="tiles"]:is([data-tile-size="small"],[data-tile-size="medium"],[data-tile-size="large"]) .container-metrics > .meter-track { display:block;grid-column:2;height:6px;margin:0; }
+html[data-docker-apps-ui][data-view="tiles"]:is([data-tile-size="small"],[data-tile-size="medium"],[data-tile-size="large"]) .container-metrics > .compact-metrics { display:none; }
+html[data-docker-apps-ui] footer { padding:10px 24px;flex-wrap:nowrap;min-height:42px; }
+html[data-docker-apps-ui] #connection-status { display:flex;align-items:center;gap:8px;min-width:0; }
+html[data-docker-apps-ui] .connection-dot { width:8px;height:8px;background:#a4aebb;border-radius:50%;flex:none; }
+html[data-docker-apps-ui][data-storage-state="connected"] .connection-dot { background:#259261; }
+html[data-docker-apps-ui][data-storage-state="error"] .connection-dot { background:#c66956; }
+html[data-docker-apps-ui] #monitor-status { flex:none;min-width:0;margin-left:auto; }
+@media(max-width:760px){
+ html[data-docker-apps-ui] header { padding:12px 16px;gap:10px; }
+ html[data-docker-apps-ui] .identity img { width:32px;height:32px; }
+ html[data-docker-apps-ui] .identity { gap:8px; }
+ html[data-docker-apps-ui] .build-version { margin-left:4px; }
+ html[data-docker-apps-ui] .header-actions { gap:6px; }
+ html[data-docker-apps-ui] .action-menu > summary { padding:7px 9px; }
+ html[data-docker-apps-ui] #manage-list > summary::after { margin-left:0; }
+ html[data-docker-apps-ui] .overview-layout,html[data-docker-apps-ui][data-summary-collapsed="true"] .overview-layout { padding:0 16px;gap:12px; }
+ html[data-docker-apps-ui] .overview-layout .filter-bar { flex-wrap:wrap; }
+ html[data-docker-apps-ui] .search { max-width:none;flex:1 1 240px; }
+ html[data-docker-apps-ui] .view-switch { margin-left:0; }
+ html[data-docker-apps-ui] .application-heading { padding:12px 16px; }
+ html[data-docker-apps-ui] main { padding:0 16px 16px; }
+ html[data-docker-apps-ui] footer { padding:8px 16px; }
+ html[data-docker-apps-ui] #connection-label { overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+}
+@media(max-width:540px){
+ html[data-docker-apps-ui] header { flex-wrap:wrap; }
+ html[data-docker-apps-ui] .header-actions { width:100%;justify-content:flex-end; }
+ html[data-docker-apps-ui] .system-bar { align-items:flex-start; }
+ html[data-docker-apps-ui] .overview-layout .nas-summary { grid-template-columns:1fr 1fr; }
+ html[data-docker-apps-ui] .summary-toggle-row { margin-left:auto; }
+ html[data-docker-apps-ui] .menu-panel { position:fixed;top:110px;right:16px; }
+ html[data-docker-apps-ui] #monitor-status { max-width:50%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+}

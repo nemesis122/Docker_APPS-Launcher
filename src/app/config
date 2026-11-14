@@ -1,0 +1,28 @@
+{
+  "repair-1.0.2.js": {
+    "DOCKERAPPS.StyleFix": {
+      "type": "lib"
+    }
+  },
+  "wrapper-__VERSION__.js": {
+    "DOCKERAPPS.AppInstance": {
+      "type": "app",
+      "title": "Docker Apps",
+      "desc": "Direkt zu deinen Container-Anwendungen",
+      "icon": "images/docker-apps-{0}.png",
+      "allUsers": true,
+      "allowMultiInstance": false,
+      "allowStandalone": false,
+      "appWindow": "DOCKERAPPS.AppWindow",
+      "depend": [
+        "DOCKERAPPS.AppWindow",
+        "DOCKERAPPS.StyleFix"
+      ]
+    },
+    "DOCKERAPPS.AppWindow": {
+      "type": "lib",
+      "title": "Docker Apps",
+      "icon": "images/docker-apps-{0}.png"
+    }
+  }
+}

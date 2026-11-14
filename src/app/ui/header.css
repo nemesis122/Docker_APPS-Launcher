@@ -1,0 +1,42 @@
+/* Live CPU/RAM/temperature in the application header; network and storage in details. */
+html[data-docker-apps-ui] header { display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px; }
+html[data-docker-apps-ui] .header-telemetry { display:flex;align-items:center;justify-content:center;gap:18px;min-width:0; }
+html[data-docker-apps-ui] #header-metrics { display:flex;align-items:center;justify-content:center;gap:18px;min-width:0; }
+html[data-docker-apps-ui] #header-metrics > div { flex:none; }
+html[data-docker-apps-ui] #header-metrics .summary-cpu,html[data-docker-apps-ui] #header-metrics .summary-ram { min-width:68px; }
+html[data-docker-apps-ui] #header-metrics .meter-label { display:flex;gap:10px;white-space:nowrap; }
+html[data-docker-apps-ui] #header-metrics .meter-label span:first-child { color:var(--muted); }
+html[data-docker-apps-ui] #header-metrics .meter-label span:last-child { color:var(--text); }
+html[data-docker-apps-ui] #header-metrics .meter-track,html[data-docker-apps-ui] #header-metrics .summary-detail { display:none; }
+html[data-docker-apps-ui] #header-metrics .summary-temperature { display:flex;flex-direction:row;gap:10px;align-items:center;white-space:nowrap; }
+html[data-docker-apps-ui] #header-metrics .summary-heading { color:var(--muted); }
+html[data-docker-apps-ui] #header-metrics .summary-ram,html[data-docker-apps-ui] #header-metrics .summary-temperature { border-left:1px solid var(--border);padding-left:18px; }
+html[data-docker-apps-ui] .header-metrics-unavailable { color:var(--muted); }
+html[data-docker-apps-ui] .header-telemetry #summary-toggle { flex:none;min-height:32px;padding:6px 9px;background:var(--surface); }
+html[data-docker-apps-ui][data-summary-collapsed="true"] .system-bar { display:none; }
+html[data-docker-apps-ui] .system-bar { padding:14px 16px;margin-top:0; }
+html[data-docker-apps-ui] .system-bar .nas-summary { display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,2fr);gap:20px; }
+html[data-docker-apps-ui] .system-bar .summary-network { grid-column:1;grid-row:1; }
+html[data-docker-apps-ui] .system-bar .volume-summary { grid-column:2;grid-row:1;border-top:0;border-left:1px solid var(--border);padding:0 0 0 20px;gap:12px 20px; }
+html[data-docker-apps-ui] .overview-layout,html[data-docker-apps-ui][data-summary-collapsed="true"] .overview-layout { padding-top:14px; }
+@media(max-width:1180px){
+ html[data-docker-apps-ui] header { grid-template-columns:minmax(0,1fr) auto;gap:12px; }
+ html[data-docker-apps-ui] .identity { grid-column:1;grid-row:1; }
+ html[data-docker-apps-ui] .header-actions { grid-column:2;grid-row:1; }
+ html[data-docker-apps-ui] .header-telemetry { grid-column:1/-1;grid-row:2;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border); }
+ html[data-docker-apps-ui] #header-metrics { justify-content:flex-start; }
+}
+@media(max-width:760px){
+ html[data-docker-apps-ui] header { gap:10px; }
+ html[data-docker-apps-ui] .header-telemetry,html[data-docker-apps-ui] #header-metrics { gap:12px; }
+ html[data-docker-apps-ui] #header-metrics .summary-ram,html[data-docker-apps-ui] #header-metrics .summary-temperature { padding-left:12px; }
+ html[data-docker-apps-ui] .system-bar .nas-summary { grid-template-columns:minmax(0,1fr);gap:12px; }
+ html[data-docker-apps-ui] .system-bar .summary-network { grid-column:1;grid-row:1; }
+ html[data-docker-apps-ui] .system-bar .volume-summary { grid-column:1;grid-row:2;border-left:0;border-top:1px solid var(--border);padding:10px 0 0; }
+}
+@media(max-width:540px){
+ html[data-docker-apps-ui] header { grid-template-columns:minmax(0,1fr); }
+ html[data-docker-apps-ui] .header-actions { grid-column:1;grid-row:2; }
+ html[data-docker-apps-ui] .header-telemetry { grid-row:3;flex-wrap:wrap; }
+ html[data-docker-apps-ui] #header-metrics { flex-wrap:wrap; }
+}

@@ -1,0 +1,10 @@
+[
+  {
+    "step_title": "Gemeinsame Speicherung auf dem NAS",
+    "items": [
+      {
+        "desc": "<b>Die App-Liste wird standardmäßig im freigegebenen Ordner docker unter Docker APPS gespeichert.</b><br><br>Der Unterordner wird beim ersten Öffnen automatisch über File Station mit den bestehenden Rechten Ihrer DSM-Anmeldung angelegt. Fehlt der Ordner docker, kann in der App ein anderer freigegebener Ordner gewählt werden. Ein bestehender Ordner und vorhandene Listen bleiben erhalten. Das Paket verlangt keine Root-Rechte und erweitert keine Ordnerberechtigungen.<br><br>Alle berechtigten Geräte verwenden dieselbe Liste. Frühere Versionen der Liste lassen sich über „Verlauf“ wiederherstellen; die App behält die letzten 30 Versionen."
+      }
+    ]
+  }
+]

@@ -1,0 +1,518 @@
+html[data-docker-apps-ui] { --bg: #f4f5f7;--surface: #fff;--heading: #f0f2f5;--border: #dce1e7;--text: #2a3b50;--muted: #8190a2;--blue: #0086e5;--field: #fff;--hover: #f7fafc;--shadow: 0 3px 12px #183c6410;color-scheme: light;color: var(--text);background: var(--bg) }
+html[data-docker-apps-ui][data-theme="dark"] { --bg: #20242b;--surface: #292f38;--heading: #303741;--border: #414b59;--text: #e9eff6;--muted: #a0afc1;--blue: #62adff;--field: #252b33;--hover: #303946;--shadow: 0 3px 12px #0002;color-scheme: dark }
+html[data-docker-apps-ui] * { box-sizing: border-box }
+html[data-docker-apps-ui] body { margin: 0px;height: 100vh;display: flex;flex-direction: column;overflow: hidden }
+html[data-docker-apps-ui] button, html[data-docker-apps-ui] input, html[data-docker-apps-ui] select { color: var(--text) }
+html[data-docker-apps-ui] button, html[data-docker-apps-ui] select { border: 1px solid var(--border);background: var(--surface);border-radius: 5px;padding: 7px 10px }
+html[data-docker-apps-ui] button { cursor: pointer }
+html[data-docker-apps-ui] button:hover { background: var(--hover) }
+html[data-docker-apps-ui] button:focus-visible, html[data-docker-apps-ui] a:focus-visible, html[data-docker-apps-ui] input:focus-visible, html[data-docker-apps-ui] select:focus-visible { outline: 2px solid var(--blue);outline-offset: 3px }
+html[data-docker-apps-ui] .primary { background: rgb(0, 134, 229);border-color: rgb(0, 134, 229);color: rgb(255, 255, 255) }
+html[data-docker-apps-ui] .primary:hover { background: rgb(8, 121, 200) }
+html[data-docker-apps-ui] .danger { color: rgb(198, 91, 91) }
+html[data-docker-apps-ui] header { display: flex;align-items: center;justify-content: space-between;gap: 18px;padding: 24px 26px 21px;background: var(--surface);border-bottom: 1px solid var(--border);flex-wrap: wrap }
+html[data-docker-apps-ui] .identity { display: flex;align-items: center;gap: 12px }
+html[data-docker-apps-ui] .identity img { width: 43px;height: 43px }
+html[data-docker-apps-ui] h1 { margin: 0px 0px 5px }
+html[data-docker-apps-ui] .identity p { color: var(--muted);margin: 0px }
+html[data-docker-apps-ui] .header-actions { display: flex;gap: 9px;align-items: center }
+html[data-docker-apps-ui] .filter-bar { display: flex;gap: 10px;align-items: center;padding: 17px 26px 13px }
+html[data-docker-apps-ui] .search { display: flex;align-items: center;gap: 8px;border: 1px solid var(--border);border-radius: 5px;background: var(--field);padding: 0px 10px;max-width: 320px;flex: 1 1 0% }
+html[data-docker-apps-ui] .search > span { color: var(--muted) }
+html[data-docker-apps-ui] input[type="search"] { border: 0px;outline: none;background: transparent;padding: 9px 0px;min-width: 0px;width: 100% }
+html[data-docker-apps-ui] input::placeholder { color: var(--muted) }
+html[data-docker-apps-ui] #category { background: var(--field) }
+html[data-docker-apps-ui] #app-count { margin-left: auto;color: var(--muted);white-space: nowrap }
+html[data-docker-apps-ui] main { flex: 1 1 0%;overflow: auto;padding: 5px 26px 22px;min-height: 0px }
+html[data-docker-apps-ui] .app-grid { display: grid;grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));gap: 12px;align-items: start }
+html[data-docker-apps-ui] .app-card { border: 1px solid var(--border);background: var(--surface);border-radius: 8px;box-shadow: var(--shadow);position: relative;overflow: hidden }
+html[data-docker-apps-ui] .card-main { display: block;text-decoration: none;color: var(--text);padding: 12px 12px 10px;min-height: 120px }
+html[data-docker-apps-ui] .card-main:hover { background: var(--hover) }
+html[data-docker-apps-ui] .app-icon { width: 58px;height: 58px;border-radius: 13px;display: flex;align-items: center;justify-content: center;margin-bottom: 16px;color: white;box-shadow: rgba(0, 0, 0, 0.067) 0px 2px 4px }
+html[data-docker-apps-ui] .icon-jd { background: rgb(239, 173, 40) }
+html[data-docker-apps-ui] .icon-filezilla { background: rgb(196, 67, 67) }
+html[data-docker-apps-ui] .icon-filebot { background: rgb(81, 137, 184) }
+html[data-docker-apps-ui] .icon-container { background: rgb(0, 134, 229) }
+html[data-docker-apps-ui] .icon-terminal { background: rgb(69, 85, 105) }
+html[data-docker-apps-ui] .icon-media { background: rgb(137, 97, 186) }
+html[data-docker-apps-ui] .icon-cloud { background: rgb(72, 161, 173) }
+html[data-docker-apps-ui] .icon-tools { background: rgb(107, 128, 153) }
+html[data-docker-apps-ui] .app-icon svg { width: 34px;height: 34px;stroke: currentcolor;fill: none;stroke-width: 1.8;stroke-linecap: round;stroke-linejoin: round }
+html[data-docker-apps-ui] .app-name { margin: 0px 0px 7px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap }
+html[data-docker-apps-ui] .app-description { color: var(--muted);min-height: 17px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap }
+html[data-docker-apps-ui] .app-address { color: var(--muted);margin-top: 10px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis }
+html[data-docker-apps-ui] .app-category { position: absolute;right: 13px;top: 16px;padding: 4px 7px;background: var(--heading);color: var(--muted);border-radius: 4px }
+html[data-docker-apps-ui] .card-footer { display: flex;align-items: center;justify-content: space-between;padding: 10px 13px;border-top: 1px solid var(--border);background: var(--heading);gap: 10px }
+html[data-docker-apps-ui] .edit { background: transparent;border: 0px;padding: 3px 0px;color: var(--muted) }
+html[data-docker-apps-ui] .open { color: var(--blue);text-decoration: none;padding: 3px 0px }
+html[data-docker-apps-ui] .open:hover { text-decoration: underline }
+html[data-docker-apps-ui] footer { display: flex;align-items: center;justify-content: space-between;gap: 10px;padding: 11px 24px;border-top: 1px solid var(--border);color: var(--muted);flex-wrap: wrap }
+html[data-docker-apps-ui] footer small { margin-left: 9px;opacity: 0.8 }
+html[data-docker-apps-ui] footer > div { display: flex;gap: 12px;flex-wrap: wrap }
+html[data-docker-apps-ui] .quiet { border: 0px;background: transparent;color: var(--muted);padding: 3px 0px }
+html[data-docker-apps-ui] .quiet:hover { color: var(--blue);background: transparent }
+html[data-docker-apps-ui] .empty { padding: 55px 15px;text-align: center;color: var(--muted) }
+html[data-docker-apps-ui] .empty-icon { color: rgb(160, 181, 204) }
+html[data-docker-apps-ui] .empty h2 { color: var(--text) }
+html[data-docker-apps-ui] .empty button { margin-top: 10px }
+html[data-docker-apps-ui] dialog { width: 470px;max-width: calc(-28px + 100vw);border: 1px solid var(--border);border-radius: 8px;box-shadow: rgba(0, 0, 0, 0.267) 0px 14px 70px;padding: 0px;background: var(--surface);color: var(--text) }
+html[data-docker-apps-ui] dialog::backdrop { background: rgba(16, 29, 45, 0.467) }
+html[data-docker-apps-ui] .dialog-heading { display: flex;align-items: center;justify-content: space-between;padding: 16px 19px;border-bottom: 1px solid var(--border);background: var(--heading) }
+html[data-docker-apps-ui] .dialog-heading h2 { margin: 0px }
+html[data-docker-apps-ui] .close { border: 0px;background: transparent;padding: 0px 1px;color: var(--muted) }
+html[data-docker-apps-ui] .form-body { padding: 19px }
+html[data-docker-apps-ui] .form-row { display: flex;flex-direction: column;gap: 6px;margin-bottom: 16px }
+html[data-docker-apps-ui] .form-row:last-child { margin-bottom: 0px }
+html[data-docker-apps-ui] .form-row label { color: var(--muted) }
+html[data-docker-apps-ui] .form-row input, html[data-docker-apps-ui] .form-row select { border: 1px solid var(--border);border-radius: 4px;padding: 8px 9px;background: var(--field);width: 100% }
+html[data-docker-apps-ui] .form-row small { color: var(--muted) }
+html[data-docker-apps-ui] .form-columns { display: grid;grid-template-columns: 1fr 1fr;gap: 15px }
+html[data-docker-apps-ui] .dialog-actions { padding: 13px 18px;background: var(--heading);border-top: 1px solid var(--border);display: flex;gap: 8px }
+html[data-docker-apps-ui] .spacer { flex: 1 1 0% }
+html[data-docker-apps-ui] .form-error { color: rgb(198, 91, 91);margin: 0px }
+html[data-docker-apps-ui] .toast { position: fixed;left: 50%;bottom: 20px;transform: translateX(-50%);display: flex;align-items: center;gap: 15px;max-width: calc(-30px + 100vw);background: var(--surface);border: 1px solid var(--border);box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 24px;border-radius: 6px;padding: 10px 13px;z-index: 5 }
+html[data-docker-apps-ui] .toast button { padding: 4px 6px;white-space: nowrap }
+html[data-docker-apps-ui] #dismiss { border: 0px;padding: 0px 3px;background: transparent;color: var(--muted) }
+html[data-docker-apps-ui] .sr-only { position: absolute;width: 1px;height: 1px;overflow: hidden;clip: rect(0px, 0px, 0px, 0px) }
+html[data-docker-apps-ui] [hidden] { display: none !important }
+@media (max-width: 720px) { html[data-docker-apps-ui] header { padding: 18px;gap: 15px }
+html[data-docker-apps-ui] .header-actions { width: 100%;justify-content: space-between }
+html[data-docker-apps-ui] .filter-bar { padding: 14px 18px 10px;flex-wrap: wrap }
+html[data-docker-apps-ui] main { padding: 4px 18px 16px }
+html[data-docker-apps-ui] .app-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));gap: 12px }
+html[data-docker-apps-ui] footer { padding: 10px 18px }
+html[data-docker-apps-ui] .app-count { width: 100% }
+ }
+@media (max-width: 450px) { html[data-docker-apps-ui] .identity img { width: 36px;height: 36px }
+html[data-docker-apps-ui] .filter-bar { gap: 8px }
+html[data-docker-apps-ui] .search { max-width: none;flex-basis: 100% }
+html[data-docker-apps-ui] #category { flex: 1 1 0% }
+html[data-docker-apps-ui] #app-count { margin-left: 0px }
+html[data-docker-apps-ui] .app-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)) }
+html[data-docker-apps-ui] .card-main { min-height: 120px }
+html[data-docker-apps-ui] .form-columns { grid-template-columns: 1fr;gap: 0px }
+html[data-docker-apps-ui] .toast { width: calc(-24px + 100vw);gap: 8px }
+ }
+html[data-docker-apps-ui] .build-version { display:inline-block;vertical-align:middle;margin-left:8px;border:1px solid var(--border);border-radius:4px;padding:3px 6px;color:var(--muted) }
+html[data-docker-apps-ui] .catalog-logo { background:#f8fafc;border:1px solid var(--border);box-shadow:none }
+html[data-docker-apps-ui] .catalog-logo img { display:block;object-fit:contain;max-width:44px;max-height:44px }
+html[data-docker-apps-ui] .icon-select { display:flex;align-items:center;gap:10px;min-height:49px;text-align:left;padding:6px 9px;background:var(--field) }
+html[data-docker-apps-ui] .icon-select .app-icon { width:32px;height:32px;border-radius:7px;margin:0 }
+html[data-docker-apps-ui] .icon-select .app-icon svg { width:20px;height:20px }
+html[data-docker-apps-ui] .icon-select .app-icon img { width:24px;height:24px }
+html[data-docker-apps-ui] .icon-select-action { margin-left:auto;color:var(--muted) }
+html[data-docker-apps-ui] #selected-icon-preview { display:flex;flex:none }
+html[data-docker-apps-ui] #icon-picker { width:760px;max-height:calc(100vh - 30px);overflow:hidden }
+html[data-docker-apps-ui] .icon-source-note { color:var(--muted);margin:6px 0 0 }
+html[data-docker-apps-ui] .icon-search-row { display:flex;gap:10px;padding:14px 17px;border-bottom:1px solid var(--border) }
+html[data-docker-apps-ui] #icon-search { flex:1;min-width:0;border:1px solid var(--border);border-radius:4px;padding:8px 10px;background:var(--field) }
+html[data-docker-apps-ui] .icon-results { height:min(380px,50vh);overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(91px,1fr));align-content:start;gap:9px;padding:16px;scrollbar-width:thin }
+html[data-docker-apps-ui] .icon-option { display:flex;flex-direction:column;align-items:center;gap:8px;padding:9px 6px;background:var(--surface);border:1px solid var(--border);border-radius:5px;min-width:0 }
+html[data-docker-apps-ui] .icon-option:hover { background:var(--hover);border-color:var(--blue) }
+html[data-docker-apps-ui] .icon-option.is-selected { border-color:var(--blue);box-shadow:inset 0 0 0 1px var(--blue) }
+html[data-docker-apps-ui] .icon-option .app-icon { width:45px;height:45px;border-radius:8px;margin:0;flex:none }
+html[data-docker-apps-ui] .icon-option .app-icon img { width:33px;height:33px }
+html[data-docker-apps-ui] .icon-option .app-icon svg { width:26px;height:26px }
+html[data-docker-apps-ui] .icon-option>span { display:block;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap }
+html[data-docker-apps-ui] .icon-picker-footer { display:flex;align-items:center;justify-content:space-between;padding:11px 17px;border-top:1px solid var(--border);color:var(--muted);background:var(--heading) }
+html[data-docker-apps-ui] .no-icons { grid-column:1/-1;text-align:center;color:var(--muted);padding:35px 0 }
+html[data-docker-apps-ui] .icon-credit { color:var(--muted);text-decoration:none;align-self:center }
+html[data-docker-apps-ui] .icon-credit:hover { text-decoration:underline;color:var(--blue) }
+html[data-docker-apps-ui] .toast { bottom:82px }
+@media(max-width:600px) { html[data-docker-apps-ui] .header-actions { flex-wrap:wrap;justify-content:flex-start }
+html[data-docker-apps-ui] .icon-search-row { flex-wrap:wrap }
+html[data-docker-apps-ui] #icon-search { flex-basis:100% }
+html[data-docker-apps-ui] .icon-results { grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:7px;padding:11px }
+html[data-docker-apps-ui] .form-columns { grid-template-columns:1fr }
+ }
+@media(max-width:600px) { html[data-docker-apps-ui] .toast { bottom:130px }
+ }
+html[data-docker-apps-ui] .app-card .app-icon { width:36px;height:36px;border-radius:8px;margin-bottom:8px }
+html[data-docker-apps-ui] .app-card .app-icon img { max-width:28px;max-height:28px }
+html[data-docker-apps-ui] .app-card .app-icon svg { width:24px;height:24px }
+html[data-docker-apps-ui] .app-name { margin-bottom:4px }
+html[data-docker-apps-ui] .app-address { margin-top:6px }
+html[data-docker-apps-ui] .app-category { right:8px;top:10px;padding:3px 5px;max-width:calc(100% - 64px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap }
+html[data-docker-apps-ui] .card-footer { padding:6px 10px;gap:6px }
+html[data-docker-apps-ui] .monitor-toolbar { display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:0 26px 12px }
+html[data-docker-apps-ui] .monitor-toolbar label { display:flex;align-items:center;gap:5px }
+html[data-docker-apps-ui] .monitor-toolbar button { padding:6px 9px }
+html[data-docker-apps-ui] #monitor-status { color:var(--muted);flex:1;min-width:180px }
+html[data-docker-apps-ui] .nas-summary { display:grid;grid-template-columns:1fr 1fr 2fr;gap:20px;padding:12px 16px;margin:0 26px 16px;background:var(--surface);border:1px solid var(--border);border-radius:6px }
+html[data-docker-apps-ui] .meter-label { display:flex;align-items:center;justify-content:space-between;gap:5px;color:var(--muted) }
+html[data-docker-apps-ui] .meter-track { height:4px;background:var(--border);border-radius:3px;overflow:hidden;margin:3px 0 6px }
+html[data-docker-apps-ui] .meter-track>span { display:block;height:100%;background:var(--blue);border-radius:3px }
+html[data-docker-apps-ui] .container-metrics { padding:0 12px 8px }
+html[data-docker-apps-ui] .status-label { display:block;margin-bottom:7px;color:var(--muted) }
+html[data-docker-apps-ui] .status-label.running { color:#259261 }
+html[data-docker-apps-ui] .status-label.stopped { color:#c66956 }
+html[data-docker-apps-ui] .status-label.paused,html[data-docker-apps-ui] .status-label.restarting { color:#b88725 }
+html[data-docker-apps-ui] .io-values,html[data-docker-apps-ui] .volume-summary { color:var(--muted);overflow-wrap:anywhere }
+html[data-docker-apps-ui] #container-import { width:760px;max-height:90vh }
+html[data-docker-apps-ui] .container-import-note { margin:16px;color:var(--muted) }
+html[data-docker-apps-ui] #container-results { max-height:45vh;overflow:auto;padding:0 16px }
+html[data-docker-apps-ui] .container-row { padding:12px 0;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:7px }
+html[data-docker-apps-ui] .container-choice { display:flex;gap:9px;align-items:center }
+html[data-docker-apps-ui] .container-choice span { min-width:0 }
+html[data-docker-apps-ui] .container-row small { display:block;color:var(--muted);overflow-wrap:anywhere }
+html[data-docker-apps-ui] .candidate-url { width:100%;border:1px solid var(--border);border-radius:4px;background:var(--field);padding:8px }
+html[data-docker-apps-ui] #container-import-error { margin:12px 16px }
+@media(max-width:600px) { html[data-docker-apps-ui] .nas-summary { grid-template-columns:1fr 1fr;margin:0 18px 12px;gap:10px }
+html[data-docker-apps-ui] .volume-summary { grid-column:1/-1 }
+html[data-docker-apps-ui] .monitor-toolbar { padding-left:18px;padding-right:18px }
+ }
+html[data-docker-apps-ui] { --muted:#526278 }
+html[data-docker-apps-ui][data-theme="dark"] { --muted:#c0ccda }
+html[data-docker-apps-ui] .app-description { min-height:19px }
+html[data-docker-apps-ui] .app-category { top:12px;max-width:calc(100% - 63px) }
+html[data-docker-apps-ui] footer small { opacity:1 }
+html[data-docker-apps-ui] .meter-label { flex-wrap:wrap }
+html[data-docker-apps-ui] #nas-address { color:var(--text);overflow-wrap:anywhere }
+html[data-docker-apps-ui] .import-host-label { display:flex;align-items:center;gap:12px;margin:0 16px 14px;flex-wrap:wrap }
+html[data-docker-apps-ui] { --tile-min:160px;--tile-icon:36px;--tile-logo:28px;--tile-svg:24px;--tile-pad:12px;--tile-height:120px;--tile-gap:12px }
+html[data-docker-apps-ui][data-tile-size="medium"] { --tile-min:176px;--tile-icon:32px;--tile-logo:26px;--tile-svg:24px;--tile-pad:10px;--tile-height:108px;--tile-gap:10px }
+html[data-docker-apps-ui][data-tile-size="large"] { --tile-min:220px;--tile-icon:44px;--tile-logo:34px;--tile-svg:30px;--tile-pad:13px;--tile-height:136px;--tile-gap:12px }
+html[data-docker-apps-ui] .app-grid { grid-template-columns:repeat(auto-fill,minmax(min(100%,var(--tile-min)),1fr));gap:var(--tile-gap) }
+html[data-docker-apps-ui] .card-main { padding:var(--tile-pad);min-height:var(--tile-height) }
+html[data-docker-apps-ui] .app-card .app-icon { width:var(--tile-icon);height:var(--tile-icon) }
+html[data-docker-apps-ui] .app-card .app-icon img { width:var(--tile-logo);height:var(--tile-logo);max-width:var(--tile-logo);max-height:var(--tile-logo) }
+html[data-docker-apps-ui] .app-card .app-icon svg { width:var(--tile-svg);height:var(--tile-svg) }
+html[data-docker-apps-ui] .app-category { max-width:calc(100% - var(--tile-icon) - var(--tile-pad) - 20px) }
+html[data-docker-apps-ui] .filter-bar { flex-wrap:wrap }
+html[data-docker-apps-ui] .tile-size-label { margin-left:6px }
+html[data-docker-apps-ui] #tile-size { background:var(--field) }
+@media(max-width:450px) { html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) { --tile-min:145px }
+html[data-docker-apps-ui] .tile-size-label { margin-left:0 }
+ }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) { --tile-min:136px;--tile-icon:22px;--tile-logo:18px;--tile-svg:18px;--tile-pad:6px;--tile-height:0px;--tile-gap:7px }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) .card-main { display:grid;grid-template-columns:22px minmax(0,1fr);grid-template-rows:auto auto;gap:3px 5px;align-items:center;min-height:0;padding:6px }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) .app-card .app-icon { grid-column:1;grid-row:1/3;margin:0;border-radius:6px }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) .app-name { grid-column:2;grid-row:1;margin:0 }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) .app-address { grid-column:2;grid-row:2;margin:0 }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) .app-description,html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) .app-category { display:none }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) .container-metrics { padding:0 6px 4px }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) .status-label { margin-bottom:3px }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) .meter-track { margin:2px 0 4px;height:3px }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) .card-footer { padding:2px 6px;gap:4px }
+html[data-docker-apps-ui] .storage-bar { display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:0 26px 12px }
+html[data-docker-apps-ui] #storage-status { flex:1;min-width:200px;overflow-wrap:anywhere }
+html[data-docker-apps-ui] button:disabled { cursor:default;opacity:.55 }
+html[data-docker-apps-ui] #migration-preview { max-height:40vh;overflow:auto;margin:12px 20px;padding-left:18px }
+html[data-docker-apps-ui] #migration-preview li { padding:6px 0;overflow-wrap:anywhere }
+@media(max-width:600px) { html[data-docker-apps-ui] .storage-bar { padding-left:18px;padding-right:18px }
+ }
+html[data-docker-apps-ui] #migration-error { margin:12px 20px }
+html[data-docker-apps-ui] .app-grid { align-items:stretch;grid-auto-rows:1fr }
+html[data-docker-apps-ui] .app-card { display:flex;flex-direction:column;min-width:0;height:100% }
+html[data-docker-apps-ui] .card-footer { margin-top:auto }
+html[data-docker-apps-ui] .nas-summary { grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.7fr);align-items:start;gap:20px }
+html[data-docker-apps-ui] .summary-detail { color:var(--muted);overflow-wrap:anywhere }
+html[data-docker-apps-ui] .summary-heading { margin-bottom:5px }
+html[data-docker-apps-ui] .volume-meter+.volume-meter { margin-top:12px }
+html[data-docker-apps-ui] .volume-meter.warning .meter-track>span { background:#b87915 }
+html[data-docker-apps-ui] .volume-meter.critical .meter-track>span { background:#ce493c }
+@media(max-width:900px) { html[data-docker-apps-ui] .nas-summary { grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px }
+html[data-docker-apps-ui] .volume-summary { grid-column:auto }
+ }
+@media(max-width:450px) { html[data-docker-apps-ui] .nas-summary { gap:12px }
+html[data-docker-apps-ui] .summary-network,html[data-docker-apps-ui] .volume-summary { grid-column:1/-1 }
+ }
+html[data-docker-apps-ui] .app-card .app-icon { margin-bottom:6px }
+html[data-docker-apps-ui] .app-card .app-description { min-height:0 }
+html[data-docker-apps-ui] .app-card .app-address { margin-top:4px }
+html[data-docker-apps-ui] .container-metrics { padding:0 var(--tile-pad) 5px }
+html[data-docker-apps-ui] .status-label { margin-bottom:3px }
+html[data-docker-apps-ui] .app-card .meter-track { margin:2px 0 3px;height:3px }
+html[data-docker-apps-ui] .card-footer { padding:3px var(--tile-pad) }
+html[data-docker-apps-ui] .app-category { top:8px;right:6px;padding:2px 4px }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) .app-card .app-icon { margin:0 }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) .app-address { margin:0 }
+html[data-docker-apps-ui][data-tile-size="very-small"] { --tile-min:124px;--tile-icon:20px;--tile-logo:17px;--tile-svg:16px;--tile-pad:5px;--tile-gap:6px }
+html[data-docker-apps-ui][data-tile-size="ultra-small"] { --tile-min:110px;--tile-icon:20px;--tile-logo:17px;--tile-svg:16px;--tile-pad:5px;--tile-gap:5px }
+html[data-docker-apps-ui]:is([data-tile-size="very-small"],[data-tile-size="ultra-small"]) .card-main { grid-template-columns:20px minmax(0,1fr);grid-template-rows:auto;gap:4px;padding:6px 5px }
+html[data-docker-apps-ui]:is([data-tile-size="very-small"],[data-tile-size="ultra-small"]) .app-address,
+html[data-docker-apps-ui]:is([data-tile-size="very-small"],[data-tile-size="ultra-small"]) .io-values { display:none }
+html[data-docker-apps-ui]:is([data-tile-size="very-small"],[data-tile-size="ultra-small"]) .app-card .app-icon { grid-row:1 }
+html[data-docker-apps-ui][data-tile-size="very-small"] .meter-label span:last-child { white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100% }
+html[data-docker-apps-ui][data-tile-size="ultra-small"] .container-metrics > :not(.status-label) { display:none }
+html[data-docker-apps-ui][data-tile-size="ultra-small"] .container-metrics { padding:0 5px 4px }
+html[data-docker-apps-ui]:is([data-tile-size="very-small"],[data-tile-size="ultra-small"]) .card-footer { gap:4px;padding:3px 5px;flex-wrap:wrap }
+html[data-docker-apps-ui] .summary-toggle-row { padding:0 26px 7px }
+html[data-docker-apps-ui] #summary-toggle { padding:4px 8px }
+html[data-docker-apps-ui][data-summary-collapsed="true"] #nas-summary { display:none }
+html[data-docker-apps-ui][data-view="list"] .app-grid { grid-template-columns:minmax(0,1fr);grid-auto-rows:auto;gap:5px }
+html[data-docker-apps-ui][data-view="list"] .app-card { display:grid;grid-template-columns:minmax(160px,1.5fr) minmax(250px,2fr) auto;align-items:center;border-radius:4px;box-shadow:none }
+html[data-docker-apps-ui][data-view="list"] .app-card .card-main { display:grid;grid-template-columns:24px minmax(0,1fr);grid-template-rows:auto auto;gap:2px 8px;padding:8px 10px;min-height:0 }
+html[data-docker-apps-ui][data-view="list"] .app-card .app-icon { width:24px;height:24px;grid-column:1;grid-row:1/3;margin:0 }
+html[data-docker-apps-ui][data-view="list"] .app-card .app-icon img { width:20px;height:20px;max-width:20px;max-height:20px }
+html[data-docker-apps-ui][data-view="list"] .app-card .app-icon svg { width:18px;height:18px }
+html[data-docker-apps-ui][data-view="list"] .app-name { grid-column:2;grid-row:1;margin:0 }
+html[data-docker-apps-ui][data-view="list"] .app-address { display:block;grid-column:2;grid-row:2;margin:0 }
+html[data-docker-apps-ui][data-view="list"] .app-category,
+html[data-docker-apps-ui][data-view="list"] .app-description,
+html[data-docker-apps-ui][data-view="list"] .io-values { display:none }
+html[data-docker-apps-ui][data-view="list"] .container-metrics { display:grid;grid-template-columns:100px minmax(60px,1fr) minmax(100px,1.5fr);grid-template-rows:auto 4px;column-gap:12px;padding:7px 10px;align-items:center }
+html[data-docker-apps-ui][data-view="list"] .container-metrics > .status-label { display:block;grid-column:1;grid-row:1/3;margin:0 }
+html[data-docker-apps-ui][data-view="list"] .container-metrics > .meter-label { display:flex;grid-row:1 }
+html[data-docker-apps-ui][data-view="list"] .container-metrics > .meter-track { display:block;grid-row:2;margin:0;height:3px }
+html[data-docker-apps-ui][data-view="list"] .container-metrics > .meter-label:nth-child(2),html[data-docker-apps-ui][data-view="list"] .container-metrics > .meter-track:nth-child(3) { grid-column:2 }
+html[data-docker-apps-ui][data-view="list"] .container-metrics > .meter-label:nth-child(4),html[data-docker-apps-ui][data-view="list"] .container-metrics > .meter-track:nth-child(5) { grid-column:3 }
+html[data-docker-apps-ui][data-view="list"] .card-footer { margin:0;border:0;background:transparent;padding:7px 10px;gap:12px;flex-wrap:nowrap }
+html[data-docker-apps-ui][data-view="icons"] .app-grid { grid-template-columns:repeat(auto-fill,minmax(100px,1fr));grid-auto-rows:1fr;gap:10px }
+html[data-docker-apps-ui][data-view="icons"] .app-card { background:transparent;border:1px solid transparent;box-shadow:none;border-radius:5px }
+html[data-docker-apps-ui][data-view="icons"] .app-card:hover { background:var(--hover);border-color:var(--border) }
+html[data-docker-apps-ui][data-view="icons"] .card-main { display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:8px;padding:12px 6px;min-height:0;text-align:center }
+html[data-docker-apps-ui][data-view="icons"] .app-card .app-icon { width:40px;height:40px;margin:0 }
+html[data-docker-apps-ui][data-view="icons"] .app-card .app-icon img { width:32px;height:32px;max-width:32px;max-height:32px }
+html[data-docker-apps-ui][data-view="icons"] .app-name { white-space:normal;overflow-wrap:anywhere;margin:0 }
+html[data-docker-apps-ui][data-view="icons"] .app-card .app-address,
+html[data-docker-apps-ui][data-view="icons"] .app-card .app-description,
+html[data-docker-apps-ui][data-view="icons"] .app-card .app-category,
+html[data-docker-apps-ui][data-view="icons"] .app-card .container-metrics,
+html[data-docker-apps-ui][data-view="icons"] .app-card .card-footer { display:none }
+html[data-docker-apps-ui] #details-address { display:block;color:var(--blue);overflow-wrap:anywhere;margin-bottom:16px }
+html[data-docker-apps-ui] #details-metrics .container-metrics { display:block;padding:0 }
+@media(max-width:720px) { html[data-docker-apps-ui][data-view="list"] .app-card { grid-template-columns:minmax(0,1fr) auto }
+html[data-docker-apps-ui][data-view="list"] .container-metrics { grid-column:1/-1;grid-row:2 }
+html[data-docker-apps-ui][data-view="list"] .card-footer { grid-column:2;grid-row:1 }
+html[data-docker-apps-ui] .summary-toggle-row { padding-left:18px;padding-right:18px }
+ }
+html[data-docker-apps-ui] .overview-layout { display:grid;grid-template-columns:minmax(0,1.6fr) minmax(340px,1fr);gap:16px;padding:16px 26px 12px;flex:none }
+html[data-docker-apps-ui] .overview-controls { min-width:0 }
+html[data-docker-apps-ui] .overview-layout .filter-bar { padding:0 0 12px;gap:8px }
+html[data-docker-apps-ui] .overview-layout .search { flex-basis:260px }
+html[data-docker-apps-ui] .overview-layout .monitor-toolbar { padding:0 0 10px;gap:8px }
+html[data-docker-apps-ui] .overview-layout .summary-toggle-row { padding:0 }
+html[data-docker-apps-ui] .overview-layout .nas-summary { margin:0;padding:10px 12px;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px }
+html[data-docker-apps-ui] .overview-layout .volume-summary { grid-column:2;grid-row:2 }
+html[data-docker-apps-ui] .overview-layout .summary-network { grid-column:1;grid-row:2 }
+html[data-docker-apps-ui] .overview-layout .volume-meter+.volume-meter { margin-top:6px }
+html[data-docker-apps-ui][data-summary-collapsed="true"] .overview-layout { grid-template-columns:minmax(0,1fr) }
+html[data-docker-apps-ui] .overview-layout:has(#nas-summary[hidden]) { grid-template-columns:minmax(0,1fr) }
+@media(max-width:1100px) { html[data-docker-apps-ui] .overview-layout { grid-template-columns:minmax(0,1fr) }
+html[data-docker-apps-ui] .overview-layout .nas-summary { grid-template-columns:repeat(2,minmax(0,1fr)) }
+ }
+@media(max-width:600px) { html[data-docker-apps-ui] .overview-layout { padding:12px 18px 10px }
+ }
+@media(max-width:450px) { html[data-docker-apps-ui] .overview-layout .summary-network,html[data-docker-apps-ui] .overview-layout .volume-summary { grid-column:1/-1;grid-row:auto }
+ }
+html[data-docker-apps-ui] #history-dialog { width:min(760px,calc(100vw - 32px)) }
+html[data-docker-apps-ui] #location-dialog { width:min(520px,calc(100vw - 32px)) }
+html[data-docker-apps-ui] .history-body { display:grid;grid-template-columns:minmax(180px,240px) 1fr;gap:14px;margin:0 20px;min-height:220px;max-height:52vh }
+html[data-docker-apps-ui] .history-list { list-style:none;margin:0;padding:0;overflow:auto;border-right:1px solid var(--border);padding-right:10px }
+html[data-docker-apps-ui] .history-list li + li { margin-top:4px }
+html[data-docker-apps-ui] .history-list button { display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;text-align:left }
+html[data-docker-apps-ui] .history-list button span { opacity:.7 }
+html[data-docker-apps-ui] .history-list button.is-selected { outline:2px solid var(--blue);outline-offset:-2px }
+html[data-docker-apps-ui] .history-list button:disabled { cursor:default;opacity:.65 }
+html[data-docker-apps-ui] .history-empty { opacity:.7;padding:6px 0 }
+html[data-docker-apps-ui] .history-preview { overflow:auto }
+html[data-docker-apps-ui] .history-preview h3 { margin:12px 0 4px }
+html[data-docker-apps-ui] .history-preview ul { margin:0;padding-left:16px }
+html[data-docker-apps-ui] .history-preview li { padding:2px 0;overflow-wrap:anywhere }
+html[data-docker-apps-ui] .history-preview li span { opacity:.7 }
+html[data-docker-apps-ui] .diff-added li::marker { content:"+ ";color:#2e9d57 }
+html[data-docker-apps-ui] .diff-removed li::marker { content:"− ";color:#d0453a }
+html[data-docker-apps-ui] .diff-changed li::marker { content:"~ ";color:#c78a10 }
+html[data-docker-apps-ui] .location-note { margin:0 0 12px;opacity:.8 }
+html[data-docker-apps-ui] #location-share { width:100% }
+@media(max-width:600px) { html[data-docker-apps-ui] .history-body { grid-template-columns:1fr;max-height:none }
+html[data-docker-apps-ui] .history-list { border-right:0;padding-right:0;max-height:30vh }
+ }
+html[data-docker-apps-ui] #location-dialog #location-copy-row { display:flex;align-items:flex-start;gap:8px;margin:14px 0 0;padding:0 }
+html[data-docker-apps-ui] #location-dialog #location-copy-row input { margin:2px 0 0;flex:none }
+html[data-docker-apps-ui] { --muted:#5c6b7d;--shadow:0 2px 7px #183c6408 }
+html[data-docker-apps-ui][data-theme="dark"] { --muted:#b2c0d1 }
+html[data-docker-apps-ui] header { padding:18px 24px;gap:14px }
+html[data-docker-apps-ui] button:not(.icon-option), html[data-docker-apps-ui] select { min-height:34px }
+html[data-docker-apps-ui] .overview-layout,
+html[data-docker-apps-ui][data-summary-collapsed="true"] .overview-layout { display:flex;flex-direction:column;gap:14px;padding:14px 24px 10px }
+html[data-docker-apps-ui] .system-bar { display:flex;align-items:flex-start;gap:12px;padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:7px }
+html[data-docker-apps-ui] .overview-layout .nas-summary { flex:1;min-width:0;display:grid;grid-template-columns:minmax(110px,1fr) minmax(160px,1.25fr) minmax(130px,.9fr) minmax(170px,1.3fr);align-items:center;gap:8px 18px;padding:0;border:0;background:transparent;border-radius:0 }
+html[data-docker-apps-ui][data-summary-collapsed="true"] #nas-summary { display:grid }
+html[data-docker-apps-ui] .summary-temperature { display:flex;flex-direction:column;gap:2px }
+html[data-docker-apps-ui] .summary-temperature strong { white-space:nowrap }
+html[data-docker-apps-ui] .overview-layout .summary-network { grid-column:auto;grid-row:auto }
+html[data-docker-apps-ui] .summary-heading { color:var(--muted);margin:0 }
+html[data-docker-apps-ui] .summary-network .summary-detail br { display:none }
+html[data-docker-apps-ui] .summary-network .summary-detail { white-space:normal }
+html[data-docker-apps-ui] .overview-layout .volume-summary { grid-column:1/-1;grid-row:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px 24px;padding-top:10px;border-top:1px solid var(--border) }
+html[data-docker-apps-ui][data-summary-collapsed="true"] .volume-summary { display:none }
+html[data-docker-apps-ui] .overview-layout .volume-meter+.volume-meter { margin:0 }
+html[data-docker-apps-ui] .overview-layout .summary-toggle-row { flex:none;padding:0 }
+html[data-docker-apps-ui] #summary-toggle { padding:5px 9px;min-height:32px }
+html[data-docker-apps-ui] .meter-label { flex-wrap:nowrap }
+html[data-docker-apps-ui] .meter-label span:last-child { white-space:nowrap }
+html[data-docker-apps-ui] .system-bar .meter-track { margin:3px 0;height:3px }
+html[data-docker-apps-ui] .overview-layout .filter-bar { padding:0 0 10px;gap:8px }
+html[data-docker-apps-ui] .search { max-width:390px }
+html[data-docker-apps-ui] .overview-layout .monitor-toolbar { padding:0;gap:8px }
+html[data-docker-apps-ui] .storage-bar { padding:4px 24px 12px }
+html[data-docker-apps-ui] #storage-status { color:var(--muted) }
+html[data-docker-apps-ui] main { padding:4px 24px 20px }
+html[data-docker-apps-ui] { --tile-min:210px;--tile-icon:36px;--tile-logo:28px;--tile-svg:24px;--tile-pad:12px;--tile-height:0px;--tile-gap:12px }
+html[data-docker-apps-ui][data-tile-size="large"] { --tile-min:250px;--tile-icon:44px;--tile-logo:34px;--tile-pad:16px;--tile-height:0px;--tile-gap:14px }
+html[data-docker-apps-ui][data-tile-size="medium"] { --tile-min:210px;--tile-icon:36px;--tile-logo:28px;--tile-pad:12px;--tile-height:0px;--tile-gap:12px }
+html[data-docker-apps-ui][data-tile-size="small"] { --tile-min:174px;--tile-icon:28px;--tile-logo:23px;--tile-pad:10px;--tile-gap:10px }
+html[data-docker-apps-ui][data-tile-size="very-small"] { --tile-min:152px;--tile-icon:24px;--tile-logo:20px;--tile-pad:8px;--tile-gap:8px }
+html[data-docker-apps-ui][data-tile-size="ultra-small"] { --tile-min:130px;--tile-icon:22px;--tile-logo:18px;--tile-pad:8px;--tile-gap:8px }
+html[data-docker-apps-ui][data-view="tiles"] .card-main { display:grid;grid-template-columns:var(--tile-icon) minmax(0,1fr);grid-template-rows:auto auto;align-items:center;gap:4px 9px;padding:var(--tile-pad);min-height:0 }
+html[data-docker-apps-ui][data-view="tiles"] .app-card .app-icon { grid-column:1;grid-row:1/3;margin:0 }
+html[data-docker-apps-ui][data-view="tiles"] .app-name { grid-column:2;grid-row:1;margin:0 }
+html[data-docker-apps-ui][data-view="tiles"] .app-description { grid-column:1/-1;grid-row:3;min-height:0;margin-top:4px }
+html[data-docker-apps-ui][data-view="tiles"] .app-address { grid-column:2;grid-row:2;margin:0 }
+html[data-docker-apps-ui][data-view="tiles"] .app-category { display:none }
+html[data-docker-apps-ui] .app-card { border-radius:8px }
+html[data-docker-apps-ui] .app-card .container-metrics { padding:0 var(--tile-pad) 10px }
+html[data-docker-apps-ui] .status-label { margin-bottom:8px }
+html[data-docker-apps-ui] .card-footer { padding:5px var(--tile-pad);background:transparent }
+html[data-docker-apps-ui] .edit, html[data-docker-apps-ui] .open { min-height:28px;display:inline-flex;align-items:center }
+html[data-docker-apps-ui] .compact-metrics { display:none }
+html[data-docker-apps-ui][data-view="tiles"]:is([data-tile-size="small"],[data-tile-size="very-small"]) .container-metrics > .meter-label,
+html[data-docker-apps-ui][data-view="tiles"]:is([data-tile-size="small"],[data-tile-size="very-small"]) .container-metrics > .meter-track { display:none }
+html[data-docker-apps-ui][data-view="tiles"]:is([data-tile-size="small"],[data-tile-size="very-small"]) .container-metrics > .compact-metrics { display:grid;gap:3px;color:var(--muted) }
+html[data-docker-apps-ui] .compact-metrics span { display:flex;justify-content:space-between;gap:8px }
+html[data-docker-apps-ui] .compact-metrics strong { color:var(--text);white-space:nowrap }
+html[data-docker-apps-ui][data-view="list"] .app-card .container-metrics { padding:8px 10px }
+html[data-docker-apps-ui] #details-metrics .compact-metrics { display:none }
+html[data-docker-apps-ui] #details-metrics .meter-label { display:flex }
+html[data-docker-apps-ui] #details-metrics .meter-track { display:block }
+html[data-docker-apps-ui] .icon-results { grid-auto-rows:100px }
+html[data-docker-apps-ui] #icon-picker[open] { display:flex;flex-direction:column;max-height:calc(100dvh - 24px) }
+html[data-docker-apps-ui] #icon-picker .dialog-heading,
+html[data-docker-apps-ui] #icon-picker .icon-search-row,
+html[data-docker-apps-ui] #icon-picker .icon-picker-footer { flex:0 0 auto }
+html[data-docker-apps-ui] #icon-picker .icon-results { flex:1 1 auto;min-height:0 }
+html[data-docker-apps-ui] .icon-option { min-height:100px;height:100%;justify-content:center;overflow:hidden }
+html[data-docker-apps-ui] .icon-option > span { flex:0 0 auto;min-height:18px }
+html[data-docker-apps-ui][data-tile-size="very-small"] { --tile-icon:28px;--tile-logo:24px }
+html[data-docker-apps-ui][data-tile-size="small"] { --tile-icon:32px;--tile-logo:26px }
+html[data-docker-apps-ui][data-tile-size="medium"] { --tile-icon:40px;--tile-logo:32px }
+@media(max-width:980px) { html[data-docker-apps-ui] .overview-layout .nas-summary { grid-template-columns:repeat(2,minmax(0,1fr)) }
+ }
+@media(max-width:600px) { html[data-docker-apps-ui] header { padding:14px 16px }
+html[data-docker-apps-ui] .overview-layout { padding:12px 16px 8px }
+html[data-docker-apps-ui] .system-bar { flex-wrap:wrap }
+html[data-docker-apps-ui] .overview-layout .nas-summary { flex-basis:100%;gap:10px }
+html[data-docker-apps-ui] .overview-layout .summary-network { grid-column:auto;grid-row:auto }
+html[data-docker-apps-ui] .system-bar .summary-toggle-row { margin-left:auto }
+html[data-docker-apps-ui] .storage-bar { padding:4px 16px 10px }
+html[data-docker-apps-ui] main { padding:4px 16px 16px }
+ }
+@media(max-width:720px) { html[data-docker-apps-ui] header { padding:10px 16px;flex-wrap:nowrap;gap:10px }
+html[data-docker-apps-ui] .identity { gap:8px;min-width:0 }
+html[data-docker-apps-ui] .identity img { width:32px;height:32px }
+html[data-docker-apps-ui] h1 { margin:0;white-space:nowrap }
+html[data-docker-apps-ui] .identity p { display:none }
+html[data-docker-apps-ui] .header-actions { width:auto;gap:6px;flex-wrap:nowrap }
+html[data-docker-apps-ui] .header-actions select { max-width:96px }
+html[data-docker-apps-ui] .header-actions button { padding:6px 8px }
+html[data-docker-apps-ui] .overview-layout { padding:10px 16px 6px;gap:10px }
+html[data-docker-apps-ui] .system-bar { padding:8px;gap:8px;flex-wrap:nowrap }
+html[data-docker-apps-ui] .overview-layout .nas-summary { flex-basis:auto;gap:6px 12px }
+html[data-docker-apps-ui] .summary-ram .summary-detail { display:none }
+html[data-docker-apps-ui] .summary-temperature { flex-direction:row;flex-wrap:wrap;gap:0 8px }
+html[data-docker-apps-ui] .summary-network .summary-heading { display:none }
+html[data-docker-apps-ui] .overview-layout .filter-bar { gap:6px;padding-bottom:8px }
+html[data-docker-apps-ui] .overview-layout .search { flex:1 1 150px;max-width:none }
+html[data-docker-apps-ui] .filter-bar label[for="view-mode"],
+ html[data-docker-apps-ui] .filter-bar .tile-size-label { position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%) }
+html[data-docker-apps-ui] .overview-layout .monitor-toolbar { gap:6px }
+html[data-docker-apps-ui] #monitor-status { min-width:0 }
+html[data-docker-apps-ui] footer { padding:6px 16px;gap:2px }
+html[data-docker-apps-ui] footer small { display:none }
+html[data-docker-apps-ui] footer > div { gap:10px }
+ }
+
+/* Exact typography rules from the original 1.5.0 source. */
+html[data-docker-apps-ui] { font: 13px Arial, Helvetica, sans-serif }
+html[data-docker-apps-ui] button, html[data-docker-apps-ui] input, html[data-docker-apps-ui] select { font: inherit }
+html[data-docker-apps-ui] h1 { font-size: 22px;letter-spacing: -0.4px;font-weight: 600 }
+html[data-docker-apps-ui] .identity p { font-size: 12px }
+html[data-docker-apps-ui] .header-actions select { font-size: 12px }
+html[data-docker-apps-ui] .search > span { font-size: 20px }
+html[data-docker-apps-ui] input[type="search"] { font-size: 12px }
+html[data-docker-apps-ui] #category { font-size: 12px }
+html[data-docker-apps-ui] #app-count { font-size: 12px }
+html[data-docker-apps-ui] .app-icon { font-size: 23px;font-weight: 700;letter-spacing: -1px }
+html[data-docker-apps-ui] .app-name { font-size: 16px;font-weight: 600;letter-spacing: -0.2px }
+html[data-docker-apps-ui] .app-description { font-size: 12px;line-height: 1.5 }
+html[data-docker-apps-ui] .app-address { font-size: 12px;font-variant-numeric: tabular-nums }
+html[data-docker-apps-ui] .app-category { font-size: 12px }
+html[data-docker-apps-ui] .edit { font-size: 12px }
+html[data-docker-apps-ui] .open { font-size: 12px;font-weight: 600 }
+html[data-docker-apps-ui] footer { font-size: 12px;line-height: 1.6 }
+html[data-docker-apps-ui] footer small { font-size: 12px }
+html[data-docker-apps-ui] .quiet { font-size: 12px }
+html[data-docker-apps-ui] .empty-icon { font-size: 38px }
+html[data-docker-apps-ui] .empty h2 { font-size: 17px;font-weight: 500 }
+html[data-docker-apps-ui] .empty p { font-size: 12px;line-height: 1.6 }
+html[data-docker-apps-ui] .dialog-heading h2 { font-size: 15px;font-weight: 600 }
+html[data-docker-apps-ui] .close { font-size: 23px;line-height: 20px }
+html[data-docker-apps-ui] .form-row label { font-size: 12px }
+html[data-docker-apps-ui] .form-row input, html[data-docker-apps-ui] .form-row select { font-size: 12px }
+html[data-docker-apps-ui] .form-row small { font-size: 12px;line-height: 1.5 }
+html[data-docker-apps-ui] .dialog-actions button { font-size: 12px }
+html[data-docker-apps-ui] .form-error { font-size: 12px;line-height: 1.5 }
+html[data-docker-apps-ui] .toast { font-size: 12px;line-height: 1.5 }
+html[data-docker-apps-ui] .toast button { font-size: 12px }
+html[data-docker-apps-ui] #dismiss { font-size: 17px }
+@media (max-width: 450px) { html[data-docker-apps-ui] h1 { font-size: 20px }
+html[data-docker-apps-ui] .toast { font-size: 12px }
+html[data-docker-apps-ui] .header-actions button { font-size: 12px }
+ }
+html[data-docker-apps-ui] .build-version { font-size: 12px;font-weight:400;letter-spacing:0 }
+html[data-docker-apps-ui] .icon-select { font-size: 12px }
+html[data-docker-apps-ui] .icon-select-action { font-size: 12px }
+html[data-docker-apps-ui] .icon-source-note { font-size: 12px;font-weight:400 }
+html[data-docker-apps-ui] #icon-search { font-size: 12px }
+html[data-docker-apps-ui] #icon-group { font-size: 12px }
+html[data-docker-apps-ui] .icon-option>span { font-size: 12px }
+html[data-docker-apps-ui] .icon-picker-footer { font-size: 12px }
+html[data-docker-apps-ui] .icon-picker-footer button { font-size: 12px }
+html[data-docker-apps-ui] .no-icons { font-size: 12px }
+html[data-docker-apps-ui] .icon-credit { font-size: 12px }
+html[data-docker-apps-ui] .app-name { font-size: 14px }
+html[data-docker-apps-ui] .app-category { font-size: 12px }
+html[data-docker-apps-ui] .monitor-toolbar { font-size: 12px }
+html[data-docker-apps-ui] .monitor-toolbar button { font-size: 12px }
+html[data-docker-apps-ui] .meter-label { font-size: 12px;line-height:1.5 }
+html[data-docker-apps-ui] .status-label { font-size: 12px }
+html[data-docker-apps-ui] .io-values,html[data-docker-apps-ui] .volume-summary { font-size: 12px;line-height:1.6 }
+html[data-docker-apps-ui] .container-import-note { font-size: 12px;line-height:1.6 }
+html[data-docker-apps-ui] .container-choice { font-size: 12px }
+html[data-docker-apps-ui] .container-row small { font-size: 12px;line-height:1.5 }
+html[data-docker-apps-ui] .candidate-url { font-size: 12px }
+html[data-docker-apps-ui] body,html[data-docker-apps-ui] body * { font-weight:700 !important }
+html[data-docker-apps-ui] .build-version { font-size:12px }
+html[data-docker-apps-ui] { --tile-name:14px }
+html[data-docker-apps-ui][data-tile-size="medium"] { --tile-name:13px }
+html[data-docker-apps-ui][data-tile-size="large"] { --tile-name:15px }
+html[data-docker-apps-ui] .app-name { font-size:var(--tile-name) }
+html[data-docker-apps-ui] .tile-size-label { font-size:12px }
+html[data-docker-apps-ui] #tile-size { font-size:12px }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) { --tile-name:12px }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) .app-address { font-size:12px }
+html[data-docker-apps-ui]:is([data-tile-size="small"],[data-tile-size="very-small"],[data-tile-size="ultra-small"]) .io-values { line-height:1.3 }
+html[data-docker-apps-ui] .storage-bar { font-size:12px }
+html[data-docker-apps-ui] .storage-bar button { font-size:12px }
+html[data-docker-apps-ui] #migration-preview { font-size:12px }
+html[data-docker-apps-ui] .summary-detail { font-size:12px;line-height:1.6 }
+html[data-docker-apps-ui] .summary-heading { font-size:12px }
+html[data-docker-apps-ui] .app-card .app-description { line-height:1.3 }
+html[data-docker-apps-ui] .app-card .meter-label { line-height:1.3 }
+html[data-docker-apps-ui] .app-card .io-values { line-height:1.3 }
+html[data-docker-apps-ui][data-tile-size="very-small"] .meter-label { line-height:1.25 }
+html[data-docker-apps-ui] #summary-toggle { font-size:12px }
+html[data-docker-apps-ui][data-view="list"] .app-name { font-size:13px }
+html[data-docker-apps-ui][data-view="list"] .app-address { font-size:12px }
+html[data-docker-apps-ui][data-view="list"] .container-metrics > .meter-label { line-height:1.3 }
+html[data-docker-apps-ui][data-view="icons"] .app-name { font-size:12px }
+html[data-docker-apps-ui] .overview-layout .summary-detail { line-height:1.35 }
+html[data-docker-apps-ui] .history-list button { font-size:12px }
+html[data-docker-apps-ui] .history-empty { font-size:12px }
+html[data-docker-apps-ui] .history-preview { font-size:12px }
+html[data-docker-apps-ui] .history-preview h3 { font-size:12px }
+html[data-docker-apps-ui] .location-note { font-size:12px }
+html[data-docker-apps-ui] #location-dialog #location-copy-row { font-weight:normal }
+html[data-docker-apps-ui] #history-dialog[open] { display:flex;flex-direction:column;max-height:calc(100dvh - 24px);overflow:hidden; } html[data-docker-apps-ui] #history-dialog > .dialog-heading, html[data-docker-apps-ui] #history-dialog > .dialog-actions, html[data-docker-apps-ui] #history-dialog > .container-import-note, html[data-docker-apps-ui] #history-dialog > .form-error { flex:0 0 auto; } html[data-docker-apps-ui] #history-dialog .history-body { flex:1 1 auto;min-height:0;overflow:auto; }
