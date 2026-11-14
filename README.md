@@ -8,7 +8,7 @@ I built this app because I could no longer add direct links to my Docker contain
 
 ## Download 1.6.0
 
-[Download SPK 1.6.0](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.0/docker-apps-monitor_noarch-1.6.0-0.spk) · [Release notes](https://github.com/nemesis122/Docker_APPS-Launcher/releases/tag/v1.6.0) · [Application source](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.0/Docker_APPS-Launcher-1.6.0-source.zip) · [SHA256 checksums](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.0/SHA256SUMS-1.6.0.txt)
+[Download SPK 1.6.0](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.0/docker-apps-monitor_noarch-1.6.0-0.spk) · [Release notes](https://github.com/nemesis122/Docker_APPS-Launcher/releases/tag/v1.6.0) · [Application source](https://github.com/nemesis122/Docker_APPS-Launcher/archive/refs/tags/v1.6.0.zip) · [SHA256 checksums](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.0/SHA256SUMS-1.6.0.txt)
 
 SPK SHA256:
 
@@ -59,9 +59,9 @@ A 1.5.x installation can still read a list saved by 1.6.0, but shows own categor
 
 Browser screenshots of version 1.6.0 with **simulated demonstration data only**. No real NAS or private user data is shown.
 
-![Docker Apps 1.6.0 — light theme, simulated demo data](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.0/docker-apps-1.6.0-light.png)
+![Docker Apps 1.6.0 — light theme, simulated demo data](docs/screenshots/docker-apps-1.6.0-light.png)
 
-[Dark theme](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.0/docker-apps-1.6.0-dark.png) · [Container rates in the details window](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.0/docker-apps-1.6.0-container-rates.png)
+[Dark theme](docs/screenshots/docker-apps-1.6.0-dark.png) · [Container rates in the details window](docs/screenshots/docker-apps-1.6.0-container-rates.png)
 
 ## Building from source
 

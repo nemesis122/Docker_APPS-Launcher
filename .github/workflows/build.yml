@@ -46,7 +46,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           test "v$(cat VERSION)" = "$GITHUB_REF_NAME" || { echo "Tag passt nicht zu VERSION"; exit 1; }
-          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || gh release create "$GITHUB_REF_NAME" --title "Docker_APPS-Launcher $(cat VERSION)" --notes "See CHANGELOG.md"
+          NOTES="docs/release-notes-$(cat VERSION).md"; test -f "$NOTES" || NOTES=CHANGELOG.md
+          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || gh release create "$GITHUB_REF_NAME" --verify-tag --title "Docker_APPS-Launcher $(cat VERSION)" --notes-file "$NOTES"
           # Never replace files that were already published with the release: their checksums are documented.
           for f in dist/*; do
             if gh release view "$GITHUB_REF_NAME" --json assets --jq '.assets[].name' | grep -qxF "$(basename "$f")"; then echo "kept: $(basename "$f")"; else gh release upload "$GITHUB_REF_NAME" "$f"; fi
