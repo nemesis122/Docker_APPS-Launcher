@@ -6,15 +6,19 @@ DSM 7.2+ launcher for container web interfaces, with a shared application list o
 
 I built this app because I could no longer add direct links to my Docker container web interfaces in Synology DSM's Container Manager. Docker_APPS-Launcher gives me a central place to collect and open those links.
 
-## Download 1.6.0
+## Download 1.6.1
 
-[Download SPK 1.6.0](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.0/docker-apps-monitor_noarch-1.6.0-0.spk) · [Release notes](https://github.com/nemesis122/Docker_APPS-Launcher/releases/tag/v1.6.0) · [Application source](https://github.com/nemesis122/Docker_APPS-Launcher/archive/refs/tags/v1.6.0.zip) · [SHA256 checksums](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.0/SHA256SUMS-1.6.0.txt)
+[Download SPK 1.6.1](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.1/docker-apps-monitor_noarch-1.6.1-0.spk) · [Release notes](https://github.com/nemesis122/Docker_APPS-Launcher/releases/tag/v1.6.1) · [Application source](https://github.com/nemesis122/Docker_APPS-Launcher/archive/refs/tags/v1.6.1.zip) · [SHA256 checksums](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.1/SHA256SUMS-1.6.1.txt)
 
 SPK SHA256:
 
 ```text
-26a11c10dd3d916ca2708278e9a3b57fe544ff3a2e65690162696aa6dd04d604
+f1878ffa4ce0e4d8118fa68d115a01031c690debc2f7d37deb0e4d811eb16542
 ```
+
+## New in 1.6.1
+
+- The source code is licensed under **GPL-3.0-or-later**. The licence text is included in the package and linked in the app. No functional changes compared with 1.6.0.
 
 ## New in 1.6.0
 
@@ -47,9 +51,9 @@ The app does not start, stop or modify containers and requests no root installat
 
 ## Upgrade notice
 
-Upgrading from 1.4.x or 1.5.x keeps the existing list. The app keeps the newest 30 list versions and removes older ones.
+Upgrading from 1.4.x, 1.5.x or 1.6.0 keeps the existing list. The app keeps the newest 30 list versions and removes older ones.
 
-A 1.5.x installation can still read a list saved by 1.6.0, but shows own categories as "Other" and ignores the NAS-address option. If you run both versions against the same list, saving from 1.5.x drops those two details.
+A 1.5.x installation can still read a list saved by 1.6.x, but shows own categories as "Other" and ignores the NAS-address option. If you run both versions against the same list, saving from 1.5.x drops those two details.
 
 ## Test status
 

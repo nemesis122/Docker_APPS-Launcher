@@ -1,4 +1,8 @@
-# Docker_APPS-Launcher 1.6.0 — validation report
+# Docker_APPS-Launcher 1.6.1 — validation report
+
+1.6.1 differs from 1.6.0 only by the licence: the GPL text is packaged and linked in the app. A package test checks that the packaged text is identical to `LICENSE`, and the browser test opens the link: 54 automated checks and 20 browser scenarios pass. The report below for 1.6.0 applies unchanged.
+
+## 1.6.0
 
 ## Scope
 
