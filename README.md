@@ -90,4 +90,10 @@ node tests/ui-regression.cjs
 
 Full history: [CHANGELOG.md](CHANGELOG.md) · Test scope and limits: [VALIDATION.md](VALIDATION.md)
 
-Icons: [selfh.st/icons](https://github.com/selfhst/icons), CC BY 4.0, plus attributed additional logos. Detailed credits are bundled in the package.
+## License
+
+Copyright © 2026 nemesis122.
+
+The application source code is licensed under the [GNU General Public License v3.0](LICENSE) (GPL-3.0-only). You may use, change and redistribute it under those terms; redistributed versions must stay under the GPL and include their source.
+
+The bundled icons are **not** covered by the GPL. They come from [selfh.st/icons](https://github.com/selfhst/icons) (CC BY 4.0) plus individually attributed logos; names, logos and trademarks belong to their respective owners. Detailed credits: [`src/app/ui/licenses/`](src/app/ui/licenses/).

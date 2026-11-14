@@ -1,6 +1,7 @@
 {
   "name": "docker-apps-dsm",
   "private": true,
+  "license": "GPL-3.0-only",
   "description": "DSM launcher for container web applications (Synology DSM 7.2+ package)",
   "scripts": {
     "test": "node --test tests/*.test.js",

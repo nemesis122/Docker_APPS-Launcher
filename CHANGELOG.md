@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- The source code is now licensed under GPL-3.0 (`LICENSE`). Bundled icons keep their own licenses.
+
 ## 1.6.0
 
 Built on 1.5.8. The bundled icons are unchanged.
