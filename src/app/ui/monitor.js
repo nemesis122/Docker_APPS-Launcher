@@ -4,7 +4,7 @@
  const $=id=>document.getElementById(id),M=DockerAppsModel,T=DockerAppsMonitorModel,e=M.escape,client=new DockerAppsDSM.Client();
  let account='browser';for(const w of [window.parent,window.top])try{const user=typeof w._S==='function'&&w._S('username');if(typeof user==='string'&&user){account=user;break;}}catch(err){}
  const liveKey='docker-apps.live:'+account;
- let remembered=false;try{remembered=localStorage.getItem(liveKey)==='true';}catch(err){}
+ let remembered=true;try{remembered=localStorage.getItem(liveKey)!=='false';}catch(err){}
  let enabled=remembered,active=true,busy=false,timer=null,controller=null,importController=null,last=null,failures=0,storageTime=0,storage=[],storageError='',candidates=[],snapshot=null,previousIo=null;
  let nasIPs=[],networkTime=0;
  let scanGeneration=0;
