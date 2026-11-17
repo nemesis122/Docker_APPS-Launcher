@@ -39,3 +39,6 @@ html[data-docker-apps-ui] #app-licenses > summary:focus-visible { outline:2px so
 html[data-docker-apps-ui] .license-content { display:flex;flex-direction:column;gap:6px;padding:4px 10px 10px;color:var(--muted); }
 html[data-docker-apps-ui] .license-content .icon-credit { padding:0; }
 @media(forced-colors:active){html[data-docker-apps-ui] .live-setting input { appearance:auto; } html[data-docker-apps-ui] .live-setting input::after { display:none; }}
+
+.empty-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}.empty-storage{overflow-wrap:anywhere}.empty-storage button{font:inherit;text-decoration:underline}#monitor-help{flex-basis:100%;max-width:75ch;color:var(--muted);overflow-wrap:anywhere}#monitor-status{overflow-wrap:anywhere}html[data-live-state="permission"] #monitor-status,html[data-live-state="error"] #monitor-status{font-weight:600}
+@media(max-height:600px){html[data-docker-apps-ui] .empty{padding:8px 0}html[data-docker-apps-ui] .empty-icon{display:none}html[data-docker-apps-ui] .empty h2{margin:0 0 4px}html[data-docker-apps-ui] .empty p{margin:6px 0}html[data-docker-apps-ui] .empty button{margin-top:0}}

@@ -1,3 +1,7 @@
+# 1.6.3
+
+Clear live states and permission help, first-start actions and storage location, startup regression tests and enforced LF installation scripts.
+
 # Changelog
 
 ## 1.6.1

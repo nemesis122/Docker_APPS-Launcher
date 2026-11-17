@@ -6,17 +6,24 @@ DSM 7.2+ launcher for container web interfaces, with a shared application list o
 
 I built this app because I could no longer add direct links to my Docker container web interfaces in Synology DSM's Container Manager. Docker_APPS-Launcher gives me a central place to collect and open those links.
 
-## Download 1.6.1
+## Download 1.6.3
 
-[Download SPK 1.6.1](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.1/docker-apps-monitor_noarch-1.6.1-0.spk) · [Release notes](https://github.com/nemesis122/Docker_APPS-Launcher/releases/tag/v1.6.1) · [Application source](https://github.com/nemesis122/Docker_APPS-Launcher/archive/refs/tags/v1.6.1.zip) · [SHA256 checksums](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.1/SHA256SUMS-1.6.1.txt)
+[Download SPK 1.6.3](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.3/docker-apps-monitor_noarch-1.6.3-0.spk) · [Release notes](https://github.com/nemesis122/Docker_APPS-Launcher/releases/tag/v1.6.3) · [Application source](https://github.com/nemesis122/Docker_APPS-Launcher/archive/refs/tags/v1.6.3.zip) · [SHA256 checksums](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.3/SHA256SUMS-1.6.3.txt)
 
 SPK SHA256:
 
 ```text
-f1878ffa4ce0e4d8118fa68d115a01031c690debc2f7d37deb0e4d811eb16542
+cc3a944b209cd532ba253847c275fea29d7226dbe0789c1e0e780bd2e06e0eec
 ```
 
-## New in 1.6.1
+## New in 1.6.3
+
+- Live states distinguish connecting, active, paused, off and permission/session failures, with DSM guidance.
+- Empty lists offer container import, manual app creation and the current storage location.
+- Live starts enabled on first launch and preserves a saved disabled preference.
+- Startup regression coverage and enforced LF endings for installation scripts.
+
+## Since 1.6.1
 
 - The source code is licensed under **GPL-3.0-or-later**. The licence text is included in the package and linked in the app. No functional changes compared with 1.6.0.
 
@@ -57,7 +64,7 @@ A 1.5.x installation can still read a list saved by 1.6.x, but shows own categor
 
 ## Test status
 
-53 automated checks and 20 browser scenarios pass against a simulated DSM Web API. Version 1.5.8 runs on a real NAS with real containers; the 1.6.0 additions have not yet been verified on NAS hardware. Details: [VALIDATION.md](VALIDATION.md).
+60 automated checks and 25 browser scenarios pass against a simulated DSM Web API. Version 1.5.8 runs on a real NAS with real containers; the 1.6.0 additions have not yet been verified on NAS hardware. Details: [VALIDATION.md](VALIDATION.md).
 
 ## Screenshots
 

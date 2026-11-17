@@ -36,7 +36,7 @@
  }
  document.addEventListener('click',event=>{for(const details of [manage.details,settings.details])if(!details.contains(event.target))details.open=false;});
  document.addEventListener('keydown',event=>{if(event.key==='Escape')for(const details of [manage.details,settings.details])if(details.open){details.open=false;details.querySelector('summary').focus();event.preventDefault();}});
- const monitorStatus=$('monitor-status');
+ const monitorStatus=$('monitor-status'),monitorHelp=$('monitor-help');
  document.querySelector('.monitor-toolbar').remove();document.querySelector('.storage-bar').remove();
  const countBar=document.createElement('div');countBar.className='application-heading';const counts=document.createElement('span');counts.id='application-states';counts.setAttribute('aria-live','polite');countBar.append($('app-count'),counts);document.querySelector('main').before(countBar);
  const filter=document.querySelector('.filter-bar'),views=document.createElement('div');views.className='view-switch';views.setAttribute('role','group');views.setAttribute('aria-label',I.t('Ansicht'));
@@ -46,11 +46,11 @@
  function syncView(){for(const b of views.children)b.setAttribute('aria-pressed',String(b.dataset.viewChoice===root.dataset.view));const show=root.dataset.view==='tiles';$('tile-size').hidden=!show;document.querySelector('.tile-size-label').hidden=!show;}
  $('view-mode').addEventListener('change',syncView);syncView();
  const footer=document.querySelector('footer');footer.replaceChildren();
- const connection=document.createElement('span');connection.id='connection-status';connection.setAttribute('role','status');const dot=document.createElement('span');dot.className='connection-dot';dot.setAttribute('aria-hidden','true');const state=document.createElement('span');state.id='connection-label';connection.append(dot,state);footer.append(connection,monitorStatus);
+ const connection=document.createElement('span');connection.id='connection-status';connection.setAttribute('role','status');const dot=document.createElement('span');dot.className='connection-dot';dot.setAttribute('aria-hidden','true');const state=document.createElement('span');state.id='connection-label';connection.append(dot,state);footer.append(connection,monitorStatus,monitorHelp);
  function storageState(){const text=$('storage-status').textContent,prefix=I.t('Gemeinsame Liste auf NAS gespeichert: ');const ok=text.startsWith(prefix),loading=text===I.t('NAS-Liste wird geladen …')||text===I.t('Wird auf NAS gespeichert …');root.dataset.storageState=ok?'connected':loading?'loading':'error';state.textContent=ok?I.t('Verbunden'):text;connection.title=text;$('menu-connection-label').textContent=ok?I.t('Verbunden'):text;$('menu-storage-path').textContent=ok?text.slice(prefix.length):$('storage-path-label').textContent.replace(I.t('Gemeinsame App-Liste: '),'').replace(/\.$/,'');}
  const statusObserver=new MutationObserver(storageState);for(const id of ['storage-status','storage-path-label'])statusObserver.observe($(id),{childList:true,subtree:true,characterData:true});storageState();
  function decorate(){for(const b of $('grid').querySelectorAll('.edit')){const name=b.closest('.app-card').dataset.appName;b.setAttribute('aria-label',name+' · '+I.t('Bearbeiten'));b.title=b.getAttribute('aria-label');b.textContent='⋮';}updateCounts();}
- function updateCounts(){const live=$('live-toggle').checked,cards=[...$('grid').querySelectorAll('.app-card')],running=cards.filter(c=>c.querySelector('.status-label.running')).length,stopped=cards.filter(c=>c.querySelector('.status-label.stopped')).length;counts.textContent=live?[running?running+' '+I.t('laufend'):'',stopped?stopped+' '+I.t('gestoppt'):''].filter(Boolean).join(' · '):I.t('Live-Daten pausiert');}
+ function updateCounts(){const live=$('live-toggle').checked,cards=[...$('grid').querySelectorAll('.app-card')],running=cards.filter(c=>c.querySelector('.status-label.running')).length,stopped=cards.filter(c=>c.querySelector('.status-label.stopped')).length;counts.textContent=live?[running?running+' '+I.t('laufend'):'',stopped?stopped+' '+I.t('gestoppt'):''].filter(Boolean).join(' · '):I.t('Live-Daten aus');}
  new MutationObserver(updateCounts).observe($('grid'),{childList:true,subtree:true,characterData:true});
  document.addEventListener('docker-apps:render',decorate);$('live-toggle').addEventListener('change',updateCounts);decorate();
 })();

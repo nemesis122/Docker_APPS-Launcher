@@ -34,7 +34,7 @@
    const auth=this.getToken(),headers={'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8','Accept':'application/json'};if(auth)headers['X-SYNO-TOKEN']=auth;
    const response=await this.fetcher('/webapi/'+path,{method:'POST',credentials:'same-origin',cache:'no-store',redirect:'error',headers,body:body.toString(),signal});
    if(!response.ok)throw Error(I.literal('DSM antwortet mit HTTP ')+response.status+'.');
-   const result=await response.json();if(result.success!==true){const code=result.error?.code;if([105,106,107,119].includes(code))throw Error(I.literal('DSM-Sitzung oder Berechtigung fehlt (Code ')+code+I.literal('). Bitte neu anmelden und Container-Manager-Rechte prüfen.'));throw Error(I.literal('DSM-Schnittstelle nicht verfügbar (Code ')+(code??I.literal('unbekannt'))+').');}
+   const result=await response.json();if(result.success!==true){const code=result.error?.code;if([105,106,107,119].includes(code))throw Object.assign(Error(I.literal('DSM-Sitzung oder Berechtigung fehlt (Code ')+code+I.literal('). Bitte neu anmelden und Container-Manager-Rechte prüfen.')),{code});throw Error(I.literal('DSM-Schnittstelle nicht verfügbar (Code ')+(code??I.literal('unbekannt'))+').');}
    return result.data;
   }
   async discover(signal){const info=await this.call('discovery',null,signal);if(!info||typeof info!=='object')throw Error(I.literal('DSM liefert keine API-Liste.'));this.info=info;return info;}

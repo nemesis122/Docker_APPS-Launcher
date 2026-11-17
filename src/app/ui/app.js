@@ -26,7 +26,7 @@
   function openIconPicker(){iconLimit=96;$('icon-search').value='';$('icon-group').value='';renderIconPicker(true);$('icon-picker').showModal();$('icon-search').focus();}
   function toast(message,allowUndo=false){$('toast-text').textContent=message;$('undo').hidden=!allowUndo||!previous;$('toast').hidden=false;}
   function storageStatus(message){$('storage-status').textContent=message;}
-  function lockControls(){for(const button of document.querySelectorAll('#add,#browse-icons,#import,#delete,#undo,.edit,#app-form button[type="submit"]'))button.disabled=saving||!nasReady;$('confirm-migration').disabled=saving;$('migrate-browser').disabled=saving||!nasReady;$('show-history').disabled=saving||!nasReady;$('storage-location').disabled=saving;$('confirm-restore').disabled=saving||!historySelected;$('confirm-location').disabled=saving;$('delete-history').disabled=saving||!historySelected||historySelected.revision>=historyRows[0]?.revision||!nasStore.canDeleteHistory;$('delete-history').title=I.t(nasStore.canDeleteHistory?'Ausgewählte alte Version dauerhaft löschen.':'Alte Versionen können nicht gelöscht werden.');for(const b of $('history-list').querySelectorAll('button'))b.disabled=saving||Number(b.dataset.revision)===historyRows[0]?.revision;}
+  function lockControls(){for(const button of document.querySelectorAll('#add,#empty-add,#empty-import,#browse-icons,#import,#delete,#undo,.edit,#app-form button[type="submit"]'))button.disabled=saving||!nasReady;$('confirm-migration').disabled=saving;$('migrate-browser').disabled=saving||!nasReady;$('show-history').disabled=saving||!nasReady;$('storage-location').disabled=saving;$('confirm-restore').disabled=saving||!historySelected;$('confirm-location').disabled=saving;$('delete-history').disabled=saving||!historySelected||historySelected.revision>=historyRows[0]?.revision||!nasStore.canDeleteHistory;$('delete-history').title=I.t(nasStore.canDeleteHistory?'Ausgewählte alte Version dauerhaft löschen.':'Alte Versionen können nicht gelöscht werden.');for(const b of $('history-list').querySelectorAll('button'))b.disabled=saving||Number(b.dataset.revision)===historyRows[0]?.revision;}
   function migrationEntries(){const next=apps.map(x=>({...x}));for(const item of legacyApps){if(next.some(x=>x.url===item.url))continue;const entry={...item};if(next.some(x=>x.id===entry.id))delete entry.id;next.push(M.clean(entry));}return M.validate(next);}
   function migrationButton(){$('migrate-browser').hidden=!legacyApps.length||(nasReady&&!legacyApps.some(x=>!apps.some(y=>y.url===x.url)));$('migrate-browser').textContent=I.t('Lokale Einträge hinzufügen');}
   async function refreshShared(force=false){
@@ -56,7 +56,7 @@
       return '<article class="app-card" data-app-id="'+e(app.id)+'" data-container-name="'+e(app.containerName||'')+'" data-app-name="'+e(app.name)+'" data-app-url="'+e(target)+'" data-nas-host="'+(app.nasHost?'true':'')+'" data-app-icon="'+e(app.icon)+'"'+(movable?' draggable="true"':'')+'><span class="app-category">'+e(I.t(app.category))+'</span><a class="card-main" href="'+e(target)+'" target="_blank" rel="noopener noreferrer" aria-label="'+e(app.name+' · '+I.t('Öffnen'))+'">'+icon(app.icon)+'<h2 class="app-name">'+e(app.name)+'</h2><div class="app-description">'+e(app.description||I.literal('Weboberfläche öffnen'))+'</div><div class="app-address" title="'+e(target)+'">'+e(display)+'</div></a><div class="card-footer"><button class="edit" data-edit="'+e(app.id)+'" aria-label="'+e(app.name+' · '+I.t('Bearbeiten'))+I.literal('">Bearbeiten</button><a class="open" href="')+e(target)+I.literal('" target="_blank" rel="noopener noreferrer">Öffnen ↗</a></div></article>');
     }).join('');
     lockControls();document.dispatchEvent(new Event('docker-apps:render'));
-    $('empty').hidden=visible.length>0;$('empty-text').textContent=apps.length?I.literal('Ändere den Filter oder füge eine Anwendung hinzu.'):I.literal('Füge deine erste Container-Anwendung mit ihrer Browseradresse hinzu.');
+    $('empty').hidden=visible.length>0;$('empty-import').hidden=apps.length>0;$('empty-heading').textContent=apps.length?I.t('Keine Anwendung gefunden'):I.t('Deine erste Anwendung');$('empty-text').textContent=apps.length?I.literal('Ändere den Filter oder füge eine Anwendung hinzu.'):I.literal('Füge deine erste Container-Anwendung mit ihrer Browseradresse hinzu.');
   }
   function editor(id){
     const app=apps.find(app=>app.id===id);editingId=app?app.id:null;
@@ -91,7 +91,7 @@
   $('grid').addEventListener('drop',async event=>{if(!dragId)return;event.preventDefault();const card=event.target.closest?.('.app-card'),id=dragId;clearDrag();if(!card||card.dataset.appId===id||!canReorder())return;const index=apps.findIndex(app=>app.id===card.dataset.appId);if(index<0)return;await commit(M.move(apps,id,index),I.t('Reihenfolge geändert.'));});
   $('grid').addEventListener('dragend',clearDrag);
   $('grid').addEventListener('click',event=>{const button=event.target.closest('[data-edit]');if(button)editor(button.dataset.edit);});
-  $('add').addEventListener('click',()=>editor());$('empty-add').addEventListener('click',()=>editor());$('cancel').addEventListener('click',closeEditor);$('close').addEventListener('click',closeEditor);
+  $('add').addEventListener('click',()=>editor());$('empty-add').addEventListener('click',()=>editor());$('empty-import').addEventListener('click',()=>$('scan-containers').click());$('empty-location').addEventListener('click',()=>$('storage-location').click());$('cancel').addEventListener('click',closeEditor);$('close').addEventListener('click',closeEditor);
   $('pick-icon').addEventListener('click',openIconPicker);
   $('browse-icons').addEventListener('click',()=>{editor();openIconPicker();});
   $('close-icons').addEventListener('click',()=>$('icon-picker').close());
@@ -136,7 +136,7 @@
 
   // --- Storage location, version history and cleanup (1.5.0) ---
   function storagePath(){return nasStore.folder||('/'+nasStore.shareName+'/'+DockerAppsNAS.FOLDER);}
-  function footerPath(){$('storage-path-label').textContent=I.t('Gemeinsame App-Liste: ')+nasStore.shareName+'/'+DockerAppsNAS.FOLDER+'.';}
+  function footerPath(){$('empty-storage-path').textContent=nasStore.shareName+'/'+DockerAppsNAS.FOLDER;$('storage-path-label').textContent=I.t('Gemeinsame App-Liste: ')+nasStore.shareName+'/'+DockerAppsNAS.FOLDER+'.';}
   async function cleanup(){const result=await nasStore.prune();if(result.error)console.warn('Docker Apps: '+result.error);}
   function fmt(key,vars){return I.t(key).replace(/\{(\w+)\}/g,(m,k)=>String(vars[k]));}
   function formatTime(seconds){return seconds?new Date(seconds*1000).toLocaleString(I.locale,{dateStyle:'medium',timeStyle:'short'}):'—';}

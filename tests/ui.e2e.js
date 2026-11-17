@@ -72,6 +72,36 @@ async function run() {
   const status = page => page.locator('#storage-status').textContent();
   const waitStatus = (page, re) => page.waitForFunction(r => new RegExp(r).test(document.getElementById('storage-status').textContent), re.source, { timeout: 10000 });
 
+  await scenario('First-start actions and live default', async ({page,url})=>{
+    await page.goto(url);await waitStatus(page,/gespeichert/);
+    assert.equal(await page.locator('#live-toggle').isChecked(),true);
+    assert.equal(await page.locator('#empty-import').isVisible(),true);
+    assert.equal(await page.locator('#empty-import').isEnabled(),true);
+    assert.match(await page.locator('#empty-storage-path').textContent(),/docker\/Docker APPS/);
+    await page.screenshot({path:path.join(SHOTS,'first-start-1.6.3.png')});await page.setViewportSize({width:620,height:430});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);await page.screenshot({path:path.join(SHOTS,'first-start-1.6.3-narrow.png')});await page.setViewportSize({width:1100,height:760});
+    await page.click('#empty-location');await page.locator('#location-dialog').waitFor();await page.click('#cancel-location');
+    await page.click('#empty-import');await page.locator('#container-import').waitFor();await page.click('#cancel-container-import');
+    await page.click('#empty-add');await page.locator('#editor').waitFor();await page.click('#cancel');
+  });
+  for(const [stored,expected]of [['true',true],['false',false]])await scenario('Saved live '+stored,async({page,url,context})=>{
+    await context.addInitScript(value=>localStorage.setItem('docker-apps.live:browser',value),stored);
+    await page.goto(url);await waitStatus(page,/gespeichert/);assert.equal(await page.locator('#live-toggle').isChecked(),expected);
+  });
+  await scenario('Live starts with blocked browser storage',async({page,url,context})=>{
+    await context.addInitScript(()=>{Storage.prototype.getItem=()=>{throw Error('storage blocked');};});
+    await page.goto(url);await waitStatus(page,/gespeichert/);assert.equal(await page.locator('#live-toggle').isChecked(),true);
+  });
+  await scenario('Live permission guidance and recovery',async({page,url})=>{
+    await page.route('**/webapi/**',async route=>{if(new URLSearchParams(route.request().postData()).get('api')==='SYNO.Docker.Container')return route.fulfill({json:{success:false,error:{code:105}}});return route.continue();});
+    await page.goto(url);await page.waitForFunction(()=>document.documentElement.dataset.liveState==='permission');
+    assert.equal(await page.locator('#monitor-help').isVisible(),true);assert.match(await page.locator('#monitor-help').textContent(),/Container Manager/);
+    await page.screenshot({path:path.join(SHOTS,'live-permission-1.6.3.png')});await page.unroute('**/webapi/**');
+    await page.route('**/webapi/**',route=>new URLSearchParams(route.request().postData()).get('api')==='SYNO.Docker.Container'?route.fulfill({json:{success:true,data:{containers:[]}}}):route.continue());
+    await page.click('#app-settings > summary');await page.click('#refresh-monitor');
+    await page.waitForFunction(()=>document.documentElement.dataset.liveState==='active');assert.equal(await page.locator('#monitor-help').isVisible(),false);
+    await page.click('#app-settings > summary');await page.locator('#live-toggle').uncheck();await page.reload();await waitStatus(page,/gespeichert/);
+    assert.equal(await page.locator('#live-toggle').isChecked(),false);assert.equal(await page.locator('html').getAttribute('data-live-state'),'off');
+  });
   await scenario('Erststart, App anlegen, Revision auf NAS', async ({ page, dsm, url }) => {
     await page.goto(url);
     await waitStatus(page, /Gemeinsame Liste auf NAS gespeichert: \/docker\/Docker APPS/);

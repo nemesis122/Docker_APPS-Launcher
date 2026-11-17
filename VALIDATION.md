@@ -1,3 +1,22 @@
+# Docker_APPS-Launcher 1.6.3 — validation report
+
+60 automated checks cover list storage, models, translations, SPK integrity and six monitor startup cases. The startup checks execute the actual monitor script with controlled browser dependencies: fresh storage, saved on/off, unavailable storage, hidden startup/resume and account-scoped persistence.
+
+25 browser scenarios cover the existing flows plus first-start actions, saved preferences, blocked storage, permission guidance and recovery. The UI regression suite covers themes, typography, telemetry, all tile sizes and views, narrow windows and the DSM wrapper.
+
+The tests use simulated DSM responses. No NAS hardware installation or upgrade was tested for this release. Screenshots of the new empty state, narrow layout and permission guidance were inspected.
+
+Commands:
+
+```sh
+node build-windows.cjs
+node --test tests/*.test.js tests/package.test.cjs
+node tests/ui.e2e.js
+node tests/ui-regression.cjs
+```
+
+## Previous report
+
 # Docker_APPS-Launcher 1.6.1 — validation report
 
 1.6.1 differs from 1.6.0 only by the licence: the GPL text is packaged and linked in the app. A package test checks that the packaged text is identical to `LICENSE`, and the browser test opens the link: 54 automated checks and 20 browser scenarios pass. The report below for 1.6.0 applies unchanged.

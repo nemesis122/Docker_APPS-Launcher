@@ -38,7 +38,11 @@
   document.dispatchEvent(new Event('docker-apps:system-render'));
 
  }
- function status(text){$('monitor-status').textContent=text;}
+ function status(text,state='connecting'){
+  $('monitor-status').textContent=text;document.documentElement.dataset.liveState=state;
+  $('monitor-help').hidden=state!=='permission';
+  $('monitor-help').textContent=state==='permission'?I.t('Bitte in DSM neu anmelden. Unter Systemsteuerung → Benutzer und Gruppe → Anwendungen die Berechtigung für Container Manager prüfen.'):'';
+ }
  async function optional(operation,signal){if(unavailable.has(operation))return null;try{const data=await client.call(operation,null,signal);issues.delete(operation);return data;}catch(err){if(signal.aborted)throw err;issues.set(operation,err.message);if(!client.info?.[DockerAppsDSM.operations[operation].api])unavailable.add(operation);return null;}}
  function stop(){clearTimeout(timer);timer=null;controller?.abort();}
  function schedule(delay=10000){clearTimeout(timer);if(enabled&&visible())timer=setTimeout(poll,delay);}
@@ -52,16 +56,16 @@
    if(!enabled||!visible())return;
    const io=T.ioMap(results[1]),now=Date.now(),rates=T.rates(previousIo?.map,io,previousIo?(now-previousIo.time)/1000:0);if(results[1])previousIo={map:io,time:now};
    snapshot={containers,resources:T.resourceMap(results[0]),io,rates,system:results[2]?T.system(results[2]):null,temperature:T.temperature(results[3])};last=Date.now();failures=0;
-   status('Live · '+new Date(last).toLocaleTimeString(I.locale)+(results[0]?'':I.literal(' · CPU/RAM nicht verfügbar')));render();updateContainerChoices();
-  }catch(err){if(enabled&&visible()){snapshot=null;failures++;status(I.literal('Keine aktuellen Daten · ')+(err.name==='AbortError'?I.literal('Zeitüberschreitung.'):err.message));render();}}
+   status(I.t('Live aktiv')+' · '+new Date(last).toLocaleTimeString(I.locale)+(results[0]?'':I.literal(' · CPU/RAM nicht verfügbar')),'active');render();updateContainerChoices();
+  }catch(err){if(enabled&&visible()){snapshot=null;failures++;const permission=[105,106,107,119].includes(err.code);status((permission?I.t('Live: Berechtigung oder Sitzung fehlt'):I.literal('Keine aktuellen Daten · ')+(err.name==='AbortError'?I.literal('Zeitüberschreitung.'):err.message)),permission?'permission':'error');render();}}
   finally{clearTimeout(timeout);busy=false;controller=null;schedule(failures?Math.min(120000,30000*failures):10000);}
  }
  function updateContainerChoices(){const select=$('edit-container'),value=select.value;select.innerHTML=I.literal('<option value="">Nicht verknüpft</option>')+(snapshot?.containers||[]).map(c=>'<option value="'+e(c.name)+'">'+e(c.name)+'</option>').join('');if(value&&!snapshot?.containers.some(c=>c.name===value))select.insertAdjacentHTML('beforeend','<option value="'+e(value)+'">'+e(value)+I.literal(' (nicht verfügbar)</option>'));select.value=value;}
- $('live-toggle').addEventListener('change',()=>{enabled=$('live-toggle').checked;try{localStorage.setItem(liveKey,String(enabled));}catch(err){$('toast-text').textContent=I.t('Live-Einstellung konnte nicht gespeichert werden.');$('undo').hidden=true;$('toast').hidden=false;}stop();snapshot=null;previousIo=null;render();if(enabled){status(I.literal('Verbinde mit DSM …'));poll();}else{status(I.literal('Live-Daten aus'));importController?.abort();}});
+ $('live-toggle').addEventListener('change',()=>{enabled=$('live-toggle').checked;try{localStorage.setItem(liveKey,String(enabled));}catch(err){$('toast-text').textContent=I.t('Live-Einstellung konnte nicht gespeichert werden.');$('undo').hidden=true;$('toast').hidden=false;}stop();snapshot=null;previousIo=null;render();if(enabled){status(I.literal('Verbinde mit DSM …'));poll();}else{status(I.literal('Live-Daten aus'),'off');importController?.abort();}});
  $('refresh-monitor').addEventListener('click',()=>{document.dispatchEvent(new Event('docker-apps:refresh'));if(enabled){storageTime=0;stop();if(!busy)poll();}});
  document.addEventListener('docker-apps:render',render);
- document.addEventListener('visibilitychange',()=>{stop();if(enabled&&visible())poll();else if(enabled)status(I.literal('Live-Daten pausiert'));});
- window.addEventListener('message',event=>{if(event.origin!==location.origin||event.source!==window.parent||event.data?.type!=='docker-apps:visibility')return;active=event.data.visible===true;stop();if(enabled&&visible())poll();else if(enabled)status(I.literal('Live-Daten pausiert'));});
+ document.addEventListener('visibilitychange',()=>{stop();if(enabled&&visible())poll();else if(enabled)status(I.literal('Live-Daten pausiert'),'paused');});
+ window.addEventListener('message',event=>{if(event.origin!==location.origin||event.source!==window.parent||event.data?.type!=='docker-apps:visibility')return;active=event.data.visible===true;stop();if(enabled&&visible())poll();else if(enabled)status(I.literal('Live-Daten pausiert'),'paused');});
  window.addEventListener('pagehide',()=>{enabled=false;stop();importController?.abort();});
  function drawCandidates(){
   $('container-results').innerHTML=candidates.map((c,i)=>'<div class="container-row"><label class="container-choice"><input type="checkbox" data-check="'+i+'" '+(c.url?'checked':'')+'><span><strong>'+e(c.name)+'</strong><small>'+e(stateLabels[c.state]+' · '+(c.image||'Container'))+'</small></span></label><input class="candidate-url" data-url="'+i+I.literal('" aria-label="Webadresse ')+e(c.name)+I.literal('" placeholder="Webadresse eingeben" value="')+e(c.url)+'"><small>'+e(c.note||I.literal('Port-Vorschlag prüfen: Nicht jeder TCP-Port ist eine Weboberfläche.'))+'</small></div>').join('')||I.literal('<p class="no-icons">Keine laufenden Container gefunden.</p>');
@@ -92,5 +96,5 @@
    entries.hosts=hosts();const saved=await new Promise(resolve=>{entries.onComplete=resolve;document.dispatchEvent(new CustomEvent('docker-apps:container-import',{detail:entries}));});if(saved){closeImport();if(enabled&&!busy)poll();}
   }catch(err){$('container-import-error').textContent=err.message;}
  });
- $('live-toggle').checked=enabled;render();if(enabled){status(I.literal('Verbinde mit DSM …'));poll();}
+ $('live-toggle').checked=enabled;render();if(enabled){status(visible()?I.literal('Verbinde mit DSM …'):I.literal('Live-Daten pausiert'),visible()?'connecting':'paused');poll();}else status(I.literal('Live-Daten aus'),'off');
 })();
