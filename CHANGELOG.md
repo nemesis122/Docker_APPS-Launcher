@@ -1,3 +1,7 @@
+# 1.6.4
+
+Increasing DSM package build numbers in both builders, with upgrade metadata regression coverage. The owner confirmed that the local 1.6.4 package works.
+
 # 1.6.3
 
 Clear live states and permission help, first-start actions and storage location, startup regression tests and enforced LF installation scripts.

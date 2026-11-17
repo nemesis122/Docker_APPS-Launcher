@@ -3,6 +3,9 @@
 const fs=require('node:fs'),path=require('node:path'),zlib=require('node:zlib'),crypto=require('node:crypto');
 const root=__dirname,version=fs.readFileSync(path.join(root,'VERSION'),'utf8').trim();
 if(!/^\d+\.\d+\.\d+$/.test(version))throw Error('Invalid VERSION');
+// Monotonic for supported major.minor.patch versions; never reuse build zero.
+const parts=version.split('.').map(Number),packageBuild=parts[0]*1000000+parts[1]*1000+parts[2];
+if(parts[1]>999||parts[2]>999||!Number.isSafeInteger(packageBuild)||packageBuild<1||packageBuild>2147483647)throw Error('VERSION exceeds DSM build-number range');
 const build=path.join(root,'build'),stage=path.join(build,'stage','app'),spk=path.join(build,'spk'),dist=path.join(root,'dist');
 if(path.resolve(build)!==path.join(path.resolve(root),'build')||path.dirname(build)!==root||path.basename(build)!=='build')throw Error('Unexpected build directory');
 fs.rmSync(build,{recursive:true,force:true});
@@ -27,8 +30,8 @@ function pack(items){const chunks=[];for(const item of items){const data=item.di
  chunks.push(Buffer.alloc(1024));return Buffer.concat(chunks);}
 const payload=zlib.gzipSync(pack([{name:'app/',dir:true},...walk(stage).map(f=>({...f,name:'app/'+f.name}))]),{level:9,mtime:0});
 fs.cpSync(path.join(root,'spk'),spk,{recursive:true});fs.writeFileSync(path.join(spk,'package.tgz'),payload);
-let info=fs.readFileSync(path.join(spk,'INFO'),'utf8').replaceAll('__VERSION__',version).replaceAll('__CHECKSUM__',crypto.createHash('md5').update(payload).digest('hex'));
+let info=fs.readFileSync(path.join(spk,'INFO'),'utf8').replaceAll('__VERSION__',version).replaceAll('__BUILD__',String(packageBuild)).replaceAll('__CHECKSUM__',crypto.createHash('md5').update(payload).digest('hex'));
 fs.writeFileSync(path.join(spk,'INFO'),info);
 let members=walk(spk).map(f=>({...f,executable:f.name.startsWith('scripts/')}));members.sort((a,b)=>{const rank=n=>n==='INFO'?0:n==='package.tgz'?1:2;return rank(a.name)-rank(b.name)||a.name.localeCompare(b.name);});
-const name='docker-apps-monitor_noarch-'+version+'-0.spk';const data=pack(members);fs.writeFileSync(path.join(dist,name),data);
+const name='docker-apps-monitor_noarch-'+version+'-'+packageBuild+'.spk';const data=pack(members);fs.writeFileSync(path.join(dist,name),data);
 const hash=crypto.createHash('sha256').update(data).digest('hex');fs.writeFileSync(path.join(dist,'SHA256SUMS-'+version+'.txt'),hash+'  '+name+'\n');console.log(name+' '+hash);

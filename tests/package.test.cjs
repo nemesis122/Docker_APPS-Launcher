@@ -1,11 +1,12 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),zlib=require('node:zlib'),crypto=require('node:crypto'),vm=require('node:vm');
 const root=path.resolve(__dirname,'..'),version=fs.readFileSync(path.join(root,'VERSION'),'utf8').trim();
+const [major,minor,patch]=version.split('.').map(Number),packageBuild=major*1000000+minor*1000+patch;
 function tar(buffer){const entries=new Map();for(let p=0;p+512<=buffer.length;){const h=buffer.subarray(p,p+512);if(h.every(b=>b===0))break;const oct=(a,b)=>parseInt(h.subarray(a,b).toString().replace(/\0/g,'').trim(),8)||0;const expected=oct(148,156);const copy=Buffer.from(h);copy.fill(32,148,156);assert.equal(copy.reduce((a,b)=>a+b,0),expected,'TAR header checksum');const size=oct(124,136),prefix=h.subarray(345,500).toString().split('\0')[0],name=(prefix?prefix+'/':'')+h.subarray(0,100).toString().split('\0')[0];assert.ok(!name.startsWith('/')&&!name.split('/').includes('..'),'No escaping paths');assert.ok(!entries.has(name),'No duplicate archive paths');assert.ok(p+512+size<=buffer.length,'Complete archive member');entries.set(name,{data:buffer.subarray(p+512,p+512+size),mode:oct(100,108),type:h[156]});p+=512+Math.ceil(size/512)*512;}return entries;}
-const outer=tar(fs.readFileSync(path.join(root,'dist','docker-apps-monitor_noarch-'+version+'-0.spk')));
+const outer=tar(fs.readFileSync(path.join(root,'dist','docker-apps-monitor_noarch-'+version+'-'+packageBuild+'.spk')));
 const info=outer.get('INFO').data.toString(),payload=outer.get('package.tgz').data,inner=tar(zlib.gunzipSync(payload));
 const get=name=>{assert.ok(inner.has('app/'+name),'Packaged file exists: '+name);return inner.get('app/'+name).data.toString();};
-test('SPK metadata, checksum and package identity',()=>{assert.match(info,/package="docker-apps"/);assert.ok(info.includes('version="'+version+'-0"'));assert.match(info,/dsmuidir="app"/);assert.match(info,/dsmappname="DOCKERAPPS.AppInstance"/);assert.ok(info.includes(crypto.createHash('md5').update(payload).digest('hex')));assert.doesNotMatch(info,/Luncher|__VERSION__|__CHECKSUM__/);});
+test('SPK metadata, checksum and package identity',()=>{assert.match(info,/package="docker-apps"/);assert.ok(info.includes('version="'+version+'-'+packageBuild+'"'));assert.match(info,/dsmuidir="app"/);assert.match(info,/dsmappname="DOCKERAPPS.AppInstance"/);assert.ok(info.includes(crypto.createHash('md5').update(payload).digest('hex')));assert.doesNotMatch(info,/Luncher|__VERSION__|__BUILD__|__CHECKSUM__/);});
 test('Every packaged script is executable, has a shell shebang and LF endings',()=>{for(const [name,entry]of outer)if(name.startsWith('scripts/')&&entry.type===48){assert.equal(entry.mode&0o111,0o111,name);assert.match(entry.data.toString(),/^#!\/bin\/sh\n/);assert.ok(!entry.data.includes(13),name+' has no CRLF');}});
 test('No unresolved version markers in the finished SPK',()=>{for(const [name,entry]of inner)assert.ok(!entry.data.includes(Buffer.from('__VERSION__')),name);});
 test('DSM registration files load the declared application and its iframe',()=>{const config=JSON.parse(get('config')),index=JSON.parse(get('index.conf'));assert.equal(index.app,'DOCKERAPPS.AppInstance');const definitions=new Map();const sandbox={window:null,DOCKERAPPS:{},Date,console};sandbox.window=sandbox;sandbox.parent=sandbox;
@@ -18,3 +19,10 @@ test('Packaged HTML references existing styles, scripts and images',()=>{for(con
 test('Existing icons, translations and data modules are retained',()=>{assert.ok([...inner.keys()].filter(n=>n.includes('/icons/')&&/\.webp$/.test(n)).length>=2970);for(const name of ['nas-store.js','model.js','monitor-model.js','dsm-readonly.js','i18n.js','app.js','monitor.js','views.js'])assert.ok(get('ui/v'+version+'/'+name).length>100);const privileges=JSON.parse(outer.get('conf/privilege').data.toString());assert.ok(privileges);});
 test('Browser-test staging files exactly match the installed application payload',()=>{for(const [name,entry]of inner){if(entry.type!==48)continue;const staged=path.join(root,'build/stage',name);assert.ok(fs.existsSync(staged),name);assert.deepEqual(fs.readFileSync(staged),entry.data,name);}});
 test('GPL licence text is packaged unchanged and linked in the app',()=>{const packaged=get('ui/v'+version+'/licenses/GPL-3.0.txt');assert.equal(packaged,fs.readFileSync(path.join(root,'LICENSE'),'utf8'));assert.match(packaged,/GNU GENERAL PUBLIC LICENSE\s+Version 3, 29 June 2007/);assert.match(get('ui/v'+version+'/layout.js'),/licenses\/GPL-3\.0\.txt/);});
+
+test('Upgrade metadata preserves identity and increases the DSM build over 1.6.2 and 1.6.3',()=>{
+ const current=/^version="([^"\n]+)"/m.exec(info)[1],buildNumber=Number(current.split('-').at(-1));
+ for(const old of ['1.6.2-0','1.6.3-0'])assert.ok(buildNumber>Number(old.split('-').at(-1)),'build increases over '+old);
+ assert.equal(/^package="([^"\n]+)"/m.exec(info)[1],'docker-apps');
+ assert.ok(Number.isInteger(buildNumber)&&buildNumber>0&&buildNumber<=2147483647);
+});

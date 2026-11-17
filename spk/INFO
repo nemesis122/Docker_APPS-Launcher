@@ -1,5 +1,5 @@
 package="docker-apps"
-version="__VERSION__-0"
+version="__VERSION__-__BUILD__"
 displayname="Docker Apps"
 displayname_enu="Docker Apps"
 displayname_ger="Docker Apps"

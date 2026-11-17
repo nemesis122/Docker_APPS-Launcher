@@ -1,3 +1,7 @@
+# 1.6.4
+
+Both builders now derive increasing DSM build numbers. The added package check verifies the current package identity and a build number higher than 1.6.2-0 and 1.6.3-0. 61 automated checks passed locally. The owner reported that the 1.6.4 package works after the earlier update refusal. The Bash build on Linux remains unverified locally.
+
 # Docker_APPS-Launcher 1.6.3 — validation report
 
 60 automated checks cover list storage, models, translations, SPK integrity and six monitor startup cases. The startup checks execute the actual monitor script with controlled browser dependencies: fresh storage, saved on/off, unavailable storage, hidden startup/resume and account-scoped persistence.

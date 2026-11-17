@@ -6,15 +6,20 @@ DSM 7.2+ launcher for container web interfaces, with a shared application list o
 
 I built this app because I could no longer add direct links to my Docker container web interfaces in Synology DSM's Container Manager. Docker_APPS-Launcher gives me a central place to collect and open those links.
 
-## Download 1.6.3
+## Download 1.6.4
 
-[Download SPK 1.6.3](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.3/docker-apps-monitor_noarch-1.6.3-0.spk) · [Release notes](https://github.com/nemesis122/Docker_APPS-Launcher/releases/tag/v1.6.3) · [Application source](https://github.com/nemesis122/Docker_APPS-Launcher/archive/refs/tags/v1.6.3.zip) · [SHA256 checksums](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.3/SHA256SUMS-1.6.3.txt)
+[Download SPK 1.6.4](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.4/docker-apps-monitor_noarch-1.6.4-1006004.spk) · [Release notes](https://github.com/nemesis122/Docker_APPS-Launcher/releases/tag/v1.6.4) · [Application source](https://github.com/nemesis122/Docker_APPS-Launcher/archive/refs/tags/v1.6.4.zip) · [SHA256 checksums](https://github.com/nemesis122/Docker_APPS-Launcher/releases/download/v1.6.4/SHA256SUMS-1.6.4.txt)
 
 SPK SHA256:
 
 ```text
-cc3a944b209cd532ba253847c275fea29d7226dbe0789c1e0e780bd2e06e0eec
+ad273792c6a082aee16c75b22b50b05516daf385aac959ff812f535651367fdc
 ```
+
+## New in 1.6.4
+
+- DSM build numbers increase automatically with the feature version.
+- Update metadata is checked against the previously published 1.6.2 and 1.6.3 packages. The owner confirmed that the local 1.6.4 package works after the earlier update refusal.
 
 ## New in 1.6.3
 
@@ -64,7 +69,7 @@ A 1.5.x installation can still read a list saved by 1.6.x, but shows own categor
 
 ## Test status
 
-60 automated checks and 25 browser scenarios pass against a simulated DSM Web API. Version 1.5.8 runs on a real NAS with real containers; the 1.6.0 additions have not yet been verified on NAS hardware. Details: [VALIDATION.md](VALIDATION.md).
+61 automated checks and 25 browser scenarios pass against a simulated DSM Web API. Version 1.5.8 runs on a real NAS with real containers; the 1.6.0 additions have not yet been verified on NAS hardware. Details: [VALIDATION.md](VALIDATION.md).
 
 ## Screenshots
 
